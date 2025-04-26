@@ -20,7 +20,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ## Features of Bytes:
 
-### - [Full demo](https://www.youtube.com/watch?v=LhtATHvYOag)
+### - [Full demo video](https://www.youtube.com/watch?v=LhtATHvYOag)
 
 ### - Customizable avatars, illustrations from [openpeeps](https://www.openpeeps.com/)
 <img src="https://github.com/user-attachments/assets/47544aa0-1709-4337-95ba-febfd493d4c4" width="800">
