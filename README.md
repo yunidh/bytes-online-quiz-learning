@@ -19,14 +19,20 @@ You can start editing the page by modifying `app/page.js`. The page auto-updates
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Features of Bytes:
-![image](https://github.com/user-attachments/assets/47544aa0-1709-4337-95ba-febfd493d4c4)
--Customizable avatars, illustrations from [openpeeps](https://www.openpeeps.com/)
 
-![image](https://github.com/user-attachments/assets/822c3f93-cb9f-42a6-9451-b67bc46a5635)
-![image](https://github.com/user-attachments/assets/558b4b05-fa3e-49a3-8bb1-6f56fb2a6df6)
+### - [Full demo](https://www.youtube.com/watch?v=LhtATHvYOag)
 
--Courses with quizes that level up user profile on completion
+### - Customizable avatars, illustrations from [openpeeps](https://www.openpeeps.com/)
+<img src="https://github.com/user-attachments/assets/47544aa0-1709-4337-95ba-febfd493d4c4" width="800">
+<br/>
 
--UI components from [shadcn](https://ui.shadcn.com/)
+### - Courses with quizes that level up user profile on completion
+<p float="left">
+  <img src="https://github.com/user-attachments/assets/346a9dde-5c30-4b77-b5aa-32d5953fd869" width="600" />
+  <img src="https://github.com/user-attachments/assets/558b4b05-fa3e-49a3-8bb1-6f56fb2a6df6" width="600" /> 
+</p>
 
--State management with [Zustand](https://zustand-demo.pmnd.rs/)
+
+### - UI components from [shadcn](https://ui.shadcn.com/)
+
+### - State management with [Zustand](https://zustand-demo.pmnd.rs/)
