@@ -18,17 +18,15 @@ You can start editing the page by modifying `app/page.js`. The page auto-updates
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## Features of Bytes:
+![image](https://github.com/user-attachments/assets/47544aa0-1709-4337-95ba-febfd493d4c4)
+-Customizable avatars, illustrations from [openpeeps](https://www.openpeeps.com/)
 
-To learn more about Next.js, take a look at the following resources:
+![image](https://github.com/user-attachments/assets/822c3f93-cb9f-42a6-9451-b67bc46a5635)
+![image](https://github.com/user-attachments/assets/558b4b05-fa3e-49a3-8bb1-6f56fb2a6df6)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+-Courses with quizes that level up user profile on completion
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+-UI components from [shadcn](https://ui.shadcn.com/)
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+-State management with [Zustand](https://zustand-demo.pmnd.rs/)
