@@ -6,7 +6,6 @@ import Elements from "./components/landing_page/Elements";
 import Cards from "./components/landing_page/Cards";
 import Connect from "./components/landing_page/Connect";
 import "./global.css";
-import "./components/landing_page/App.css";
 import { AuthContextProvider } from "./context/AuthContext";
 
 export const metadata = {
