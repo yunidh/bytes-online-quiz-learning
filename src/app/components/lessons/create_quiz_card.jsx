@@ -105,24 +105,48 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
 
   const saveQuiz = useCallback(async () => {
     if (!quizTitle.trim()) {
-      toast.error("Please enter a quiz title");
+      toast("❌ Please enter a quiz title", {
+        style: {
+          fontSize: "1.2rem",
+          padding: "16px 24px",
+          borderRadius: "8px",
+        },
+      });
       return;
     }
 
     // Validate current question
     const currentQuestion = questions[currentQuestionIndex];
     if (!currentQuestion.question.trim()) {
-      toast.error("Please enter a question");
+      toast("❌ Please enter a question", {
+        style: {
+          fontSize: "1.2rem",
+          padding: "16px 24px",
+          borderRadius: "8px",
+        },
+      });
       return;
     }
 
     if (currentQuestion.options.some((option) => !option.trim())) {
-      toast.error("Please fill all options");
+      toast("❌ Please fill all options", {
+        style: {
+          fontSize: "1.2rem",
+          padding: "16px 24px",
+          borderRadius: "8px",
+        },
+      });
       return;
     }
 
     if (!currentQuestion.correctAnswer.trim()) {
-      toast.error("Please select a correct answer");
+      toast("❌ Please select a correct answer", {
+        style: {
+          fontSize: "1.2rem",
+          padding: "16px 24px",
+          borderRadius: "8px",
+        },
+      });
       return;
     }
 
@@ -146,7 +170,13 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
         await updateDoc(quizRef, {
           questions: arrayUnion(...questions),
         });
-        toast.success("Questions added to existing quiz!");
+        toast("✅ Questions added to existing quiz!", {
+          style: {
+            fontSize: "1.2rem",
+            padding: "16px 24px",
+            borderRadius: "8px",
+          },
+        });
       } else {
         // Create new quiz
         const quizData = {
@@ -154,7 +184,13 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
           questions: questions,
         };
         await addDoc(collection(db, "courses"), quizData);
-        toast.success("Quiz created successfully!");
+        toast("🎉 Quiz created successfully!", {
+          style: {
+            fontSize: "1.2rem",
+            padding: "16px 24px",
+            borderRadius: "8px",
+          },
+        });
       }
 
       // Reset form
@@ -166,7 +202,13 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
       }
     } catch (error) {
       console.error("Error saving quiz:", error);
-      alert("Error saving quiz. Please try again.");
+      toast("💥 Error saving quiz. Please try again.", {
+        style: {
+          fontSize: "1.2rem",
+          padding: "16px 24px",
+          borderRadius: "8px",
+        },
+      });
     } finally {
       setIsSaving(false);
     }
