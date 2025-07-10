@@ -2,12 +2,12 @@
 
 import QuizComponent from "./QuizComponent";
 import LessonComponent from "./LessonComponent";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { UserAuth } from "@/app/context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
 import userAchievements from "@/lib/userAchivementsStore";
-import { Separator } from "./ui/separator";
+import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 
 export function LessonAndQuizComponent({ LessonId, Lessons, LessonName }) {

@@ -1,10 +1,10 @@
-import { LessonCard } from "../components/lessons/lesson_card_unlocked";
-import { LessonCardNew } from "../components/lessons/lesson_card_new";
+"use client";
+import { LessonCard } from "@/app/components/lessons/lesson_card_unlocked";
+import { LessonCardNew } from "@/app/components/lessons/lesson_card_new";
+import { CreateQuizCard } from "@/app/components/lessons/create_quiz_card";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
-import { db } from "../../../lib/firebase";
-export const metadata = {
-  title: "List of Courses",
-};
+import { db } from "/lib/firebase";
+import { useState, useEffect, useCallback } from "react";
 
 // Function to fetch quiz data from Firestore
 async function getQuizData() {
@@ -33,27 +33,54 @@ async function getQuizData() {
   }
 }
 
-export default async function courses() {
-  // Fetch all quiz data from Firestore
-  const quizzes = await getQuizData();
+export default function courses() {
+  const [quizzes, setQuizzes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  console.log("Fetched quizzes:", quizzes.length);
+  const fetchQuizzes = useCallback(async () => {
+    setLoading(true);
+    const fetchedQuizzes = await getQuizData();
+    setQuizzes(fetchedQuizzes);
+    setLoading(false);
+    console.log("Fetched quizzes:", fetchedQuizzes.length);
+  }, []);
+
+  useEffect(() => {
+    fetchQuizzes();
+  }, [fetchQuizzes]);
+
+  const handleQuizCreated = useCallback(() => {
+    // Refresh the quiz list when a new quiz is created
+    fetchQuizzes();
+  }, [fetchQuizzes]);
+
+  if (loading) {
+    return (
+      <main className="mx-48 my-24">
+        <div className="grid grid-cols-2 gap-8 gap-x-40">
+          <div className="col-span-2 text-center text-muted-foreground">
+            Loading quizzes...
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="mx-48 my-24">
       <div className="grid grid-cols-2 gap-8 gap-x-40">
-        {/* <LessonCard
-          courseTitle={"Insert Title"}
-          courseId={"Insert Name"}
-          alignment="justify-self-start"
-        /> */}
+        {/* Create Quiz Card - Always render first to maintain position */}
+        <CreateQuizCard
+          key="create-quiz-card"
+          onQuizCreated={handleQuizCreated}
+        />
+
+        {/* Existing Quiz Cards */}
         {quizzes.length > 0 ? (
-          quizzes.map((quiz, index) => (
-            <LessonCardNew key={`${quiz.id}-${index}`} quizData={quiz} />
-          ))
+          quizzes.map((quiz) => <LessonCardNew key={quiz.id} quizData={quiz} />)
         ) : (
-          <div className="col-span-2 text-center text-muted-foreground">
-            No quizzes available
+          <div className="col-span-1 text-center text-muted-foreground">
+            No existing quizzes
           </div>
         )}
       </div>

@@ -1,6 +1,6 @@
 import { Separator } from "@radix-ui/react-select";
 import Code from "./Code";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { UserAuth } from "@/app/context/AuthContext";
 
 function QuizComponent({ MainQuestion, SubQuestion, Options, Answer, Toast }) {

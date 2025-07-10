@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardHeader } from "@/components/ui/card";
-import { CardContent } from "../ui/card";
-import { UserAuth } from "../../context/AuthContext";
+import { CardContent } from "@/components/ui/card";
+import { UserAuth } from "@/app/context/AuthContext";
 import userAchievements from "@/lib/userAchivementsStore";
 
 export function AchievementScroll() {

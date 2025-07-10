@@ -1,4 +1,4 @@
-import Code from "./Code";
+import Code from "@/components/Code";
 
 function LessonComponent({
   Title,

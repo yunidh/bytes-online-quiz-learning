@@ -6,7 +6,7 @@ import {
   onAuthStateChanged,
   GoogleAuthProvider,
 } from "firebase/auth";
-import { auth } from "../../../lib/firebase";
+import { auth } from "/lib/firebase";
 
 //used to shate data that can be considered global
 

@@ -1,13 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { UserAuth } from "../context/AuthContext";
+import { UserAuth } from "@/app/context/AuthContext";
 import { signOut } from "firebase/auth";
-import { ModeToggle } from "../../components/ui/theme-toggle";
+import { ModeToggle } from "@/components/ui/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import { Drawer, DummyLogo } from "./navbar/drawer";
-import { Badge } from "@/components/ui/badge";
 import { ProfileMenu } from "./navbar/profileMenu";
 
 const Navbar = (props) => {
