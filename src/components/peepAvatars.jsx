@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import useAvatar from "@/app/components/navbar/avatarStore";
 import Peep from "react-peeps";
 
@@ -28,7 +28,7 @@ const styles = {
 };
 
 export function PeepAvatar() {
-  // Get Values for peeps from useAvatar  
+  // Get Values for peeps from useAvatar
   const accessory = useAvatar((state) => state.accessory);
   const body = useAvatar((state) => state.body);
   const face = useAvatar((state) => state.face);

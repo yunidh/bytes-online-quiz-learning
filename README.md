@@ -1,5 +1,5 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
+# (insert vercel link)
 ## Getting Started
 
 First, run the development server:
@@ -18,17 +18,23 @@ You can start editing the page by modifying `app/page.js`. The page auto-updates
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## Features of Bytes:
 
-To learn more about Next.js, take a look at the following resources:
+<img width="1362" height="642" alt="image" src="https://github.com/user-attachments/assets/c4651285-9b99-4c34-941c-414d6e219df0" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/a952cf64-4ea3-4695-a839-95319495c012" width="750" />
+  <img src="https://github.com/user-attachments/assets/beac32cb-77da-4103-ab66-04fa4b16b380" width="250" />
+</p>
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/eca1a0f2-fd7c-43f0-b8c2-8b0afd7b442b" width="350" />
+  <img src="https://github.com/user-attachments/assets/cb01bf21-4df2-4472-b582-165db7b158e9" width="650" />
+</p>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### - Customizable avatars, illustrations from [openpeeps](https://www.openpeeps.com/)
 
-## Deploy on Vercel
+### - Backend powered by Firebase, storing custom editable quizes, user stats, achievements, and avatar
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### - UI components from [shadcn](https://ui.shadcn.com/)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### - State management with [Zustand](https://zustand-demo.pmnd.rs/)

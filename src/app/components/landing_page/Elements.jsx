@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { fadeIn } from "@/app/variant";
+import { fadeIn } from "../../variant";
 
 const services = [
   {
@@ -25,17 +25,17 @@ const services = [
 const Elements = () => {
   return (
     <section className="mt-56 flex items-center" id="services">
-      <div class="custom-shape-divider-top-1703863178">
+      <div className="custom-shape-divider-top-1703863178">
         <svg
           data-name="Layer 1"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1200 120"
           preserveAspectRatio="none"
         >
-          <path
+          {/* <path
             d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
             class="shape-fill"
-          ></path>
+          ></path> */}
         </svg>
       </div>
       <div className="ml-32">
@@ -47,14 +47,14 @@ const Elements = () => {
             viewport={{ once: false, amount: 0.3 }}
             className="flex-1 lg:bg-quizzes lg:bg-bottom bg-no-repeat mb-12 lg:mb-0 "
           >
-            <text className="absolute  text-center ml-20">
+            <div className="absolute text-center ml-20">
               <div className="font-bold text-5xl mb-6 tracking-[10%] heading-gradient">
                 Features included
               </div>
               <h3 className=" font-primary text-[26px] leading-[46px] text-white font-extralight ">
                 Learn, Achieve, Personalize
               </h3>
-            </text>
+            </div>
             <div className="bg-no-repeat mix-blend-lighten mt-20">
               <Image src="/image/quizzes.png" width={550} height={550} />
             </div>

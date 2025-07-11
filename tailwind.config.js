@@ -2,10 +2,9 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{js,jsx}",
-    "./components/**/*.{js,jsx}",
-    "./app/**/*.{js,jsx}",
     "./src/**/*.{js,jsx}",
+    "./src/app/**/*.{js,jsx}",
+    "./src/components/**/*.{js,jsx}",
   ],
   theme: {
     container: {
@@ -17,8 +16,8 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        firacode: ["var(--font-firacode)"],
-        nunito: ["var(--font-nunito)"],
+        firacode: ["Fira Code", "monospace"],
+        nunito: ["Nunito Sans", "sans-serif"],
       },
 
       colors: {
