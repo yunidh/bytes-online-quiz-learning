@@ -1,4 +1,9 @@
 "use client";
+import { collection, addDoc, getDocs } from "firebase/firestore";
+import { db } from "/lib/firebase";
+import { UserAuth } from "@/app/context/AuthContext";
+import { checkForNewAchievements } from "@/lib/achievementUtils";
+import { recordQuizCompletion } from "@/lib/statsUtils";
 import {
   Card,
   CardContent,
@@ -8,16 +13,19 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useState, useEffect } from "react";
-import { Lock, Unlock } from "lucide-react";
+import { Lock, Unlock, Edit, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-export function LessonCardNew({ quizData }) {
+export function LessonCardNew({ quizData, onEditQuiz, onDeleteQuiz }) {
   const [isActive, setActive] = useState(false);
   const [selectedAnswers, setSelectedAnswers] = useState({}); // Changed to object to store all answers
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [score, setScore] = useState(null);
+
+  // Get current user from AuthContext
+  const { user } = UserAuth();
 
   // Fallback to placeholder data if no quiz data is provided
   const defaultQuizData = {
@@ -42,6 +50,23 @@ export function LessonCardNew({ quizData }) {
     setScore(null);
   }, [quizData]);
 
+  const handleEditQuiz = () => {
+    if (onEditQuiz) {
+      onEditQuiz(activeQuizData);
+    }
+  };
+
+  const handleDeleteQuiz = () => {
+    if (onDeleteQuiz) {
+      const confirmDelete = window.confirm(
+        `Are you sure you want to delete "${activeQuizData.title}"? This action cannot be undone.`
+      );
+      if (confirmDelete) {
+        onDeleteQuiz(activeQuizData);
+      }
+    }
+  };
+
   const showLesson = () => {
     setActive((prevActive) => !prevActive);
   };
@@ -65,7 +90,7 @@ export function LessonCardNew({ quizData }) {
     }
   };
 
-  const handleSubmitQuiz = () => {
+  const handleSubmitQuiz = async () => {
     // Calculate score
     let correctAnswers = 0;
     activeQuizData.questions.forEach((question, index) => {
@@ -79,12 +104,36 @@ export function LessonCardNew({ quizData }) {
     const totalQuestions = activeQuizData.questions.length;
     const scorePercentage = Math.round((correctAnswers / totalQuestions) * 100);
 
-    setScore({
+    const scoreData = {
       correct: correctAnswers,
       total: totalQuestions,
       percentage: scorePercentage,
-    });
+    };
+
+    setScore(scoreData);
     setIsSubmitted(true);
+
+    // Save quiz result to Firestore for stats tracking
+    if (user?.uid) {
+      try {
+        const quizResultsRef = collection(db, "users", user.uid, "quizResults");
+        await addDoc(quizResultsRef, {
+          quizTitle: activeQuizData.title,
+          score: scoreData,
+          answers: selectedAnswers,
+          completedAt: new Date(),
+          quizId: activeQuizData.id || "unknown",
+        });
+
+        // Update user stats using the new stats system
+        await recordQuizCompletion(user.uid, correctAnswers, totalQuestions);
+
+        // Check and update achievements
+        await checkForNewAchievements(user.uid);
+      } catch (error) {
+        console.error("Error saving quiz result:", error);
+      }
+    }
   };
 
   const handleResetQuiz = () => {
@@ -239,46 +288,98 @@ export function LessonCardNew({ quizData }) {
   };
 
   const CollapsedCard = () => (
-    <Card className="border-8 border-border transition-all duration-500 overflow-hidden">
-      <CardHeader className="pt-4 group">
-        <CardTitle className="group z-0 text-center font-firacode tracking-wide flex">
-          <LessonButton title={"Insert Title"} isLocked={false} />
-        </CardTitle>
-      </CardHeader>
-    </Card>
+    <div className="relative group">
+      <Card className="border-8 border-border transition-all duration-500 overflow-hidden">
+        <CardHeader className="pt-4 group">
+          <CardTitle className="group z-0 text-center font-firacode tracking-wide flex">
+            <LessonButton title={"Insert Title"} isLocked={false} />
+          </CardTitle>
+        </CardHeader>
+      </Card>
+
+      {/* Edit/Delete buttons for custom quizzes - Hovering flags */}
+      {activeQuizData.isCustom && !activeQuizData.isDefault && (
+        <div className="absolute left-0 top-6 transform -translate-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+          <div className="flex flex-col gap-2">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={handleEditQuiz}
+              className="flex items-center justify-center w-10 h-10 rounded-full shadow-lg hover:scale-110 transition-transform duration-200 bg-blue-500 hover:bg-blue-600 text-white"
+            >
+              <Edit className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={handleDeleteQuiz}
+              className="flex items-center justify-center w-10 h-10 rounded-full shadow-lg hover:scale-110 transition-transform duration-200 bg-red-500 hover:bg-red-600 text-white"
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 
   const ExpandedCard = () => (
-    <Card className="border-8 border-border transition-all duration-500">
-      <CardHeader className="pt-4 group pb-0">
-        <CardTitle className="group z-0 font-firacode tracking-wide">
-          <div className="flex justify-center mb-2">
-            <LessonButton title={"Insert Title"} isLocked={false} />
-          </div>
-        </CardTitle>
-        <div className="font-firacode flex justify-center">
-          {score && (
-            <div className="flex items-center gap-4 text-lg font-bold">
-              <div>
-                Score: {score.correct}/{score.total}
-              </div>
-              <div
-                className={`${
-                  score.percentage >= 70
-                    ? "text-green-600"
-                    : score.percentage >= 50
-                    ? "text-yellow-600"
-                    : "text-red-600"
-                }`}
-              >
-                {score.percentage}%
-              </div>
+    <div className="relative group">
+      <Card className="border-8 border-border transition-all duration-500">
+        <CardHeader className="pt-4 group pb-0">
+          <CardTitle className="group z-0 font-firacode tracking-wide">
+            <div className="flex justify-center mb-2">
+              <LessonButton title={"Insert Title"} isLocked={false} />
             </div>
-          )}
+          </CardTitle>
+          <div className="font-firacode flex justify-center">
+            {score && (
+              <div className="flex items-center gap-4 text-lg font-bold">
+                <div>
+                  Score: {score.correct}/{score.total}
+                </div>
+                <div
+                  className={`${
+                    score.percentage >= 70
+                      ? "text-green-600"
+                      : score.percentage >= 50
+                      ? "text-yellow-600"
+                      : "text-red-600"
+                  }`}
+                >
+                  {score.percentage}%
+                </div>
+              </div>
+            )}
+          </div>
+        </CardHeader>
+        <QuizSection />
+      </Card>
+
+      {/* Edit/Delete buttons for custom quizzes - Hovering flags */}
+      {activeQuizData.isCustom && !activeQuizData.isDefault && (
+        <div className="absolute left-0 top-6 transform -translate-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+          <div className="flex flex-col gap-2">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={handleEditQuiz}
+              className="flex items-center justify-center w-10 h-10 rounded-full shadow-lg hover:scale-110 transition-transform duration-200 bg-blue-500 hover:bg-blue-600 text-white"
+            >
+              <Edit className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={handleDeleteQuiz}
+              className="flex items-center justify-center w-10 h-10 rounded-full shadow-lg hover:scale-110 transition-transform duration-200 bg-red-500 hover:bg-red-600 text-white"
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
-      </CardHeader>
-      <QuizSection />
-    </Card>
+      )}
+    </div>
   );
 
   return (

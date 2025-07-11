@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import React, { useState } from "react";
-import { fadeIn } from "@/app/variant";
 import { UserAuth } from "@/app/context/AuthContext";
+import { fadeIn } from "../../variant";
 
 const Connect = () => {
   const [text, setText] = useState("");

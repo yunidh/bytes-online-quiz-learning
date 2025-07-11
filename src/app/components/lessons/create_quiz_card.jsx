@@ -23,6 +23,9 @@ import {
 import { db } from "/lib/firebase";
 import { toast, Toaster } from "react-hot-toast";
 import { UserAuth } from "@/app/context/AuthContext";
+import { checkForNewAchievements } from "@/lib/achievementUtils";
+import { recordQuizCreation } from "@/lib/statsUtils";
+import { Separator } from "@/components/ui/separator";
 
 // Helper function to create a document ID from title
 function createDocumentId(title) {
@@ -205,6 +208,10 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
           isCustom: true, // Mark as custom quiz
         };
         await setDoc(quizRef, quizData);
+
+        // Update user stats for quiz creation
+        await recordQuizCreation(user.uid);
+
         toast("🎉 Quiz created successfully!", {
           style: {
             fontSize: "1.2rem",
@@ -213,6 +220,9 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
           },
         });
       }
+
+      // Check and award achievements
+      await checkForNewAchievements(user.uid);
 
       // Reset form
       discardQuiz();
@@ -240,12 +250,12 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
 
   return (
     <div className="">
-      <div>
+      {/* <div>
         <Toaster position="bottom-right" reverseOrder={false} />
-      </div>
+      </div> */}
       {isActive ? (
         <Card className="border-8 border-border transition-all duration-500">
-          <CardHeader className="pt-4 group">
+          <CardHeader className="pt-4 pb-0 group">
             <CardTitle className="group z-0 text-center font-firacode tracking-wide flex">
               <Button
                 onClick={showCreateQuiz}
@@ -261,11 +271,11 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
           </CardHeader>
           <CardContent className="p-6 space-y-6">
             <div className="text-center">
-              <h3 className="text-xl font-semibold mb-2">Create New Quiz</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-ml font-bold text-muted-foreground">
                 Question {currentQuestionIndex + 1} of {questions.length}
               </p>
             </div>
+            <Separator />
 
             {/* Quiz Title */}
             <div className="space-y-2">
@@ -313,9 +323,7 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
                     onClick={() => handleCorrectAnswerChange(option)}
                     className="whitespace-nowrap"
                   >
-                    {currentQuestion.correctAnswer === option
-                      ? "Correct"
-                      : "Mark Correct"}
+                    {currentQuestion.correctAnswer === option ? "✓" : "Set"}
                   </Button>
                 </div>
               ))}

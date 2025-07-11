@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { fadeIn } from "@/app/variant";
+import { fadeIn } from "../../variant";
 
 const services = [
   {

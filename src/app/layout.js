@@ -2,13 +2,16 @@ import "./global.css";
 import { ThemeProvider } from "./components/theme-provider";
 import Navbar from "./components/Navbar";
 import { AuthContextProvider } from "./context/AuthContext";
+import AvatarManager from "./components/AvatarManager";
 import NextTopLoader from "nextjs-toploader";
+import { Toaster } from "react-hot-toast";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
         <AuthContextProvider>
+          <AvatarManager />
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -21,6 +24,7 @@ export default function RootLayout({ children }) {
               color="hsl(262.1 83.3% 57.8%)"
               height={4}
             />
+            <Toaster position="bottom-right" reverseOrder={false} />
             {children}
           </ThemeProvider>
         </AuthContextProvider>

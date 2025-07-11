@@ -1,11 +1,18 @@
 "use client";
-import { LessonCard } from "@/app/components/lessons/lesson_card_unlocked";
 import { LessonCardNew } from "@/app/components/lessons/lesson_card_new";
 import { CreateQuizCard } from "@/app/components/lessons/create_quiz_card";
-import { collection, getDocs, doc, getDoc } from "firebase/firestore";
+import { EditQuizCard } from "@/app/components/lessons/edit_quiz_card";
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { db } from "/lib/firebase";
 import { useState, useEffect, useCallback } from "react";
 import { UserAuth } from "../context/AuthContext";
+import { toast } from "react-hot-toast";
 
 // Function to fetch quiz data from Firestore
 async function getQuizData(user) {
@@ -58,6 +65,7 @@ async function getQuizData(user) {
 export default function courses() {
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [editingQuiz, setEditingQuiz] = useState(null);
   const { user } = UserAuth(); // Get current user
 
   const fetchQuizzes = useCallback(async () => {
@@ -77,6 +85,42 @@ export default function courses() {
     fetchQuizzes();
   }, [fetchQuizzes]);
 
+  const handleEditQuiz = useCallback((quizData) => {
+    setEditingQuiz(quizData);
+  }, []);
+
+  const handleQuizUpdated = useCallback(() => {
+    // Refresh the quiz list and close edit mode
+    fetchQuizzes();
+    setEditingQuiz(null);
+  }, [fetchQuizzes]);
+
+  const handleCancelEdit = useCallback(() => {
+    setEditingQuiz(null);
+  }, []);
+
+  const handleDeleteQuiz = useCallback(
+    async (quizData) => {
+      if (!user?.uid) return;
+
+      try {
+        const quizRef = doc(db, "users", user.uid, "quizzes", quizData.id);
+        await deleteDoc(quizRef);
+
+        toast.success("Quiz deleted successfully!", {
+          duration: 3000,
+        });
+
+        // Refresh the quiz list
+        fetchQuizzes();
+      } catch (error) {
+        console.error("Error deleting quiz:", error);
+        toast.error("Failed to delete quiz. Please try again.");
+      }
+    },
+    [user, fetchQuizzes]
+  );
+
   if (loading) {
     return (
       <main className="mx-48 my-24">
@@ -84,6 +128,21 @@ export default function courses() {
           <div className="col-span-2 text-center text-muted-foreground">
             Loading quizzes...
           </div>
+        </div>
+      </main>
+    );
+  }
+
+  // If editing a quiz, show the edit form
+  if (editingQuiz) {
+    return (
+      <main className="mx-48 my-24">
+        <div className="flex justify-center">
+          <EditQuizCard
+            quizData={editingQuiz}
+            onQuizUpdated={handleQuizUpdated}
+            onCancel={handleCancelEdit}
+          />
         </div>
       </main>
     );
@@ -104,7 +163,11 @@ export default function courses() {
         {quizzes.length > 0 ? (
           quizzes.map((quiz) => (
             <div key={quiz.id} className="relative">
-              <LessonCardNew quizData={quiz} />
+              <LessonCardNew
+                quizData={quiz}
+                onEditQuiz={handleEditQuiz}
+                onDeleteQuiz={handleDeleteQuiz}
+              />
               {/* Quiz source indicator */}
               <div className="absolute top-2 right-2 z-10">
                 {quiz.isDefault ? (
