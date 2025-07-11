@@ -1,5 +1,5 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
+# (insert vercel link)
 ## Getting Started
 
 First, run the development server:
@@ -19,7 +19,6 @@ You can start editing the page by modifying `app/page.js`. The page auto-updates
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Features of Bytes:
-(insert vercel link)
 
 <img width="1362" height="642" alt="image" src="https://github.com/user-attachments/assets/c4651285-9b99-4c34-941c-414d6e219df0" />
 <p align="center">
