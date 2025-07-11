@@ -18,9 +18,20 @@ import {
   updateDoc,
   arrayUnion,
   getDocs,
+  setDoc,
 } from "firebase/firestore";
 import { db } from "/lib/firebase";
 import { toast, Toaster } from "react-hot-toast";
+import { UserAuth } from "@/app/context/AuthContext";
+
+// Helper function to create a document ID from title
+function createDocumentId(title) {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "-") // Replace non-alphanumeric with hyphens
+    .replace(/-+/g, "-") // Replace multiple hyphens with single hyphen
+    .replace(/^-|-$/g, ""); // Remove leading/trailing hyphens
+}
 
 export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
   const [isActive, setActive] = useState(false);
@@ -34,6 +45,9 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
     },
   ]);
   const [isSaving, setIsSaving] = useState(false);
+
+  // Get current user from AuthContext
+  const { user } = UserAuth();
 
   const showCreateQuiz = useCallback(() => {
     setActive(!isActive);
@@ -153,20 +167,23 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
     setIsSaving(true);
 
     try {
-      // Check if quiz with same title exists
-      const quizzesCollection = collection(db, "courses");
-      const existingQuizQuery = await getDocs(quizzesCollection);
-      let existingQuiz = null;
+      // Create user-specific collection path
+      const userQuizzesCollection = collection(
+        db,
+        "users",
+        user.uid,
+        "quizzes"
+      );
 
-      existingQuizQuery.forEach((doc) => {
-        if (doc.data().title === quizTitle) {
-          existingQuiz = { id: doc.id, ...doc.data() };
-        }
-      });
+      // Create document ID from quiz title
+      const quizDocId = createDocumentId(quizTitle);
+      const quizRef = doc(userQuizzesCollection, quizDocId);
 
-      if (existingQuiz) {
+      // Check if quiz with same title exists for this user
+      const existingQuizDoc = await getDoc(quizRef);
+
+      if (existingQuizDoc.exists()) {
         // Add questions to existing quiz
-        const quizRef = doc(db, "courses", existingQuiz.id);
         await updateDoc(quizRef, {
           questions: arrayUnion(...questions),
         });
@@ -178,12 +195,16 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
           },
         });
       } else {
-        // Create new quiz
+        // Create new quiz for this user
         const quizData = {
           title: quizTitle,
           questions: questions,
+          createdAt: new Date(),
+          createdBy: user.uid,
+          authorName: user.displayName || user.email,
+          isCustom: true, // Mark as custom quiz
         };
-        await addDoc(collection(db, "courses"), quizData);
+        await setDoc(quizRef, quizData);
         toast("🎉 Quiz created successfully!", {
           style: {
             fontSize: "1.2rem",

@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/card";
 import { useState, useEffect } from "react";
 import { firaCode } from "@/app/layout";
-import { Lock, Unlock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import Link from "next/link";

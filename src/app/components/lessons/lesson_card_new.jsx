@@ -8,7 +8,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useState, useEffect } from "react";
-import { firaCode } from "@/app/layout";
 import { Lock, Unlock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -19,9 +18,6 @@ export function LessonCardNew({ quizData }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [score, setScore] = useState(null);
-
-  // Create a unique identifier for this component instance
-  const [componentId] = useState(() => Math.random().toString(36).substr(2, 9));
 
   // Fallback to placeholder data if no quiz data is provided
   const defaultQuizData = {
@@ -37,14 +33,6 @@ export function LessonCardNew({ quizData }) {
 
   const activeQuizData = quizData || defaultQuizData;
 
-  // Debug effect to track state changes
-  useEffect(() => {
-    console.log(
-      `[${componentId}] Component ${activeQuizData.title} isActive changed to:`,
-      isActive
-    );
-  }, [isActive, componentId, activeQuizData.title]);
-
   // Reset state when quiz data changes
   useEffect(() => {
     setActive(false);
@@ -55,17 +43,7 @@ export function LessonCardNew({ quizData }) {
   }, [quizData]);
 
   const showLesson = () => {
-    console.log(
-      `[${componentId}] Toggling quiz for: ${activeQuizData.title}`,
-      `Current state: ${isActive}`,
-      `Will become: ${!isActive}`
-    );
-    setActive((prevActive) => {
-      console.log(
-        `[${componentId}] State changed from ${prevActive} to ${!prevActive}`
-      );
-      return !prevActive;
-    });
+    setActive((prevActive) => !prevActive);
   };
 
   const handleAnswerSelect = (option) => {
@@ -91,7 +69,9 @@ export function LessonCardNew({ quizData }) {
     // Calculate score
     let correctAnswers = 0;
     activeQuizData.questions.forEach((question, index) => {
-      if (selectedAnswers[index] === question.correctAnswer) {
+      const userAnswer = selectedAnswers[index];
+      const isCorrect = userAnswer === question.correctAnswer;
+      if (isCorrect) {
         correctAnswers++;
       }
     });
@@ -124,6 +104,12 @@ export function LessonCardNew({ quizData }) {
     currentQuestionIndex === activeQuizData.questions.length - 1;
 
   const LessonButton = ({ isLocked }) => {
+    // Limit title to 18 characters
+    const truncatedTitle =
+      activeQuizData.title.length > 18
+        ? activeQuizData.title.substring(0, 18) + "..."
+        : activeQuizData.title;
+
     return (
       <Button
         disabled={false}
@@ -132,7 +118,7 @@ export function LessonCardNew({ quizData }) {
         className="text-3xl group center font-semibold flex-grow p-10 m-0 hover:scale-105 transition-transform duration-300"
       >
         <div className="group-hover:heading-gradient transition- duration-300">
-          {activeQuizData.title}
+          {truncatedTitle}
         </div>
       </Button>
     );
@@ -253,11 +239,7 @@ export function LessonCardNew({ quizData }) {
   };
 
   const CollapsedCard = () => (
-    <Card
-      className="border-8 border-border transition-all duration-500 overflow-hidden"
-      data-quiz-id={quizData?.id}
-      data-component-id={componentId}
-    >
+    <Card className="border-8 border-border transition-all duration-500 overflow-hidden">
       <CardHeader className="pt-4 group">
         <CardTitle className="group z-0 text-center font-firacode tracking-wide flex">
           <LessonButton title={"Insert Title"} isLocked={false} />
@@ -267,37 +249,33 @@ export function LessonCardNew({ quizData }) {
   );
 
   const ExpandedCard = () => (
-    <Card
-      className="border-8 border-border transition-all duration-500"
-      data-quiz-id={quizData?.id}
-      data-component-id={componentId}
-    >
-      <CardHeader className="pt-4 group">
-        <CardTitle className="group z-0 font-firacode tracking-wide flex flex-row justify-between items-center">
-          <div className="flex-1">
+    <Card className="border-8 border-border transition-all duration-500">
+      <CardHeader className="pt-4 group pb-0">
+        <CardTitle className="group z-0 font-firacode tracking-wide">
+          <div className="flex justify-center mb-2">
             <LessonButton title={"Insert Title"} isLocked={false} />
           </div>
+        </CardTitle>
+        <div className="font-firacode flex justify-center">
           {score && (
-            <div className="ml-4 text-right">
-              <div className="text-sm font-bold">
+            <div className="flex items-center gap-4 text-lg font-bold">
+              <div>
                 Score: {score.correct}/{score.total}
               </div>
               <div
-                className={`text-xs ${
+                className={`${
                   score.percentage >= 70
                     ? "text-green-600"
                     : score.percentage >= 50
                     ? "text-yellow-600"
-                    : score.percentage >= 0
-                    ? "text-red-600"
-                    : "text-white"
+                    : "text-red-600"
                 }`}
               >
                 {score.percentage}%
               </div>
             </div>
           )}
-        </CardTitle>
+        </div>
       </CardHeader>
       <QuizSection />
     </Card>

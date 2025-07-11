@@ -5,28 +5,50 @@ import { CreateQuizCard } from "@/app/components/lessons/create_quiz_card";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "/lib/firebase";
 import { useState, useEffect, useCallback } from "react";
+import { UserAuth } from "../context/AuthContext";
 
 // Function to fetch quiz data from Firestore
-async function getQuizData() {
+async function getQuizData(user) {
   try {
-    // Get all quizzes from a collection
-    const quizzesCollection = collection(db, "courses");
-    const quizSnapshot = await getDocs(quizzesCollection);
-    const quizzes = [];
+    let allQuizzes = [];
 
-    quizSnapshot.forEach((doc) => {
-      quizzes.push({ id: doc.id, ...doc.data() });
+    // 1. Get default quizzes (Python, JavaScript) - available to all users
+    const defaultQuizzesCollection = collection(db, "courses");
+    const defaultSnapshot = await getDocs(defaultQuizzesCollection);
+
+    defaultSnapshot.forEach((doc) => {
+      const data = doc.data();
+      allQuizzes.push({
+        id: doc.id,
+        ...data,
+        isDefault: true,
+        source: "default",
+      });
     });
 
-    // Return all quizzes
-    return quizzes;
+    // 2. Get user-specific quizzes (only if user is logged in)
+    if (user) {
+      const userQuizzesCollection = collection(
+        db,
+        "users",
+        user.uid,
+        "quizzes"
+      );
+      const userSnapshot = await getDocs(userQuizzesCollection);
 
-    // Option 2: Get a specific quiz by document ID (uncomment if you prefer this)
-    // const quizDoc = await getDoc(doc(db, "quizzes", "your-quiz-id"));
-    // if (quizDoc.exists()) {
-    //   return { id: quizDoc.id, ...quizDoc.data() };
-    // }
-    // return null;
+      userSnapshot.forEach((doc) => {
+        const data = doc.data();
+        allQuizzes.push({
+          id: doc.id,
+          ...data,
+          isDefault: false,
+          source: "user",
+          userId: user.uid,
+        });
+      });
+    }
+
+    return allQuizzes;
   } catch (error) {
     console.error("Error fetching quiz data:", error);
     return [];
@@ -36,14 +58,15 @@ async function getQuizData() {
 export default function courses() {
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { user } = UserAuth(); // Get current user
 
   const fetchQuizzes = useCallback(async () => {
     setLoading(true);
-    const fetchedQuizzes = await getQuizData();
+    const fetchedQuizzes = await getQuizData(user);
     setQuizzes(fetchedQuizzes);
     setLoading(false);
     console.log("Fetched quizzes:", fetchedQuizzes.length);
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     fetchQuizzes();
@@ -69,18 +92,36 @@ export default function courses() {
   return (
     <main className="mx-48 my-24">
       <div className="grid grid-cols-2 gap-8 gap-x-40">
-        {/* Create Quiz Card - Always render first to maintain position */}
-        <CreateQuizCard
-          key="create-quiz-card"
-          onQuizCreated={handleQuizCreated}
-        />
+        {/* Create Quiz Card - Only show if user is logged in */}
+        {user && (
+          <CreateQuizCard
+            key="create-quiz-card"
+            onQuizCreated={handleQuizCreated}
+          />
+        )}
 
         {/* Existing Quiz Cards */}
         {quizzes.length > 0 ? (
-          quizzes.map((quiz) => <LessonCardNew key={quiz.id} quizData={quiz} />)
+          quizzes.map((quiz) => (
+            <div key={quiz.id} className="relative">
+              <LessonCardNew quizData={quiz} />
+              {/* Quiz source indicator */}
+              <div className="absolute top-2 right-2 z-10">
+                {quiz.isDefault ? (
+                  <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
+                    Default
+                  </span>
+                ) : (
+                  <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+                    Custom
+                  </span>
+                )}
+              </div>
+            </div>
+          ))
         ) : (
           <div className="col-span-1 text-center text-muted-foreground">
-            No existing quizzes
+            {user ? "No quizzes available" : "Please login to view quizzes"}
           </div>
         )}
       </div>
