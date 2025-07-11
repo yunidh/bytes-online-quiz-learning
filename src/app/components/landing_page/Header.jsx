@@ -45,10 +45,11 @@ const Header = () => {
             />
           </h1>
           <p className="text-[#ADB7BE] text-base sm:text-lg mb-6 lg:text-xl text-justify ">
-            Our gamified online platform transforms education into an immersive
-            adventure. Enhance your learning skills with our innovative gamified
-            learning platform where education meets excitement. Join us and
-            unlock the doors to a world where education meets excitement.
+            (THIS IS FULLSTACK)Our gamified online platform transforms education
+            into an immersive adventure. Enhance your learning skills with our
+            innovative gamified learning platform where education meets
+            excitement. Join us and unlock the doors to a world where education
+            meets excitement.
           </p>
 
           <div>

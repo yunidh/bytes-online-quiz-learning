@@ -2,8 +2,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { fadeIn } from "@/app/variant";
 import Image from "next/image";
+import { fadeIn } from "../../variant";
 const Cards = () => {
   return (
     <section className="flex">

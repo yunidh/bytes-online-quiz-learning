@@ -10,8 +10,9 @@ import { SelectGroup } from "@radix-ui/react-select";
 
 export function SelectHair() {
   const updateHair = useAvatar((state) => state.updateHair);
+  const currentHair = useAvatar((state) => state.hair);
   return (
-    <Select onValueChange={(value) => updateHair(value)}>
+    <Select value={currentHair} onValueChange={(value) => updateHair(value)}>
       <SelectTrigger className="w-auto">
         <SelectValue placeholder="Select Hair" className="text-sm" />
       </SelectTrigger>
@@ -34,8 +35,9 @@ export function SelectHair() {
 
 export function SelectFace() {
   const updateFace = useAvatar((state) => state.updateFace);
+  const currentFace = useAvatar((state) => state.face);
   return (
-    <Select onValueChange={(value) => updateFace(value)}>
+    <Select value={currentFace} onValueChange={(value) => updateFace(value)}>
       <SelectTrigger className="w-auto">
         <SelectValue placeholder="Select Face" className="text-sm" />
       </SelectTrigger>
@@ -58,8 +60,9 @@ export function SelectFace() {
 
 export function SelectBody() {
   const updateBody = useAvatar((state) => state.updateBody);
+  const currentBody = useAvatar((state) => state.body);
   return (
-    <Select onValueChange={(value) => updateBody(value)}>
+    <Select value={currentBody} onValueChange={(value) => updateBody(value)}>
       <SelectTrigger className="w-auto">
         <SelectValue placeholder="Select Body" className="text-sm" />
       </SelectTrigger>
@@ -82,8 +85,12 @@ export function SelectBody() {
 
 export function SelectAccessory() {
   const updateAccessory = useAvatar((state) => state.updateAccessory);
+  const currentAccessory = useAvatar((state) => state.accessory);
   return (
-    <Select onValueChange={(value) => updateAccessory(value)}>
+    <Select
+      value={currentAccessory}
+      onValueChange={(value) => updateAccessory(value)}
+    >
       <SelectTrigger className="w-auto">
         <SelectValue placeholder="Select Accessory" className="text-sm" />
       </SelectTrigger>
@@ -103,8 +110,12 @@ export function SelectAccessory() {
 
 export function SelectFacialHair() {
   const updatefacialHair = useAvatar((state) => state.updateFacialHair);
+  const currentFacialHair = useAvatar((state) => state.facialHair);
   return (
-    <Select onValueChange={(value) => updatefacialHair(value)}>
+    <Select
+      value={currentFacialHair}
+      onValueChange={(value) => updatefacialHair(value)}
+    >
       <SelectTrigger className="w-auto">
         <SelectValue placeholder="Select Facial Hair" className="text-sm" />
       </SelectTrigger>

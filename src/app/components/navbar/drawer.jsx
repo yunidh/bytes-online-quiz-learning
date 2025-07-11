@@ -1,6 +1,6 @@
 "use client";
 import { ChevronRight } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { AchievementScroll } from "./achievementScroll";
 import { Separator } from "@/components/ui/separator";
 import { PeepAvatar } from "@/components/peepAvatars";
@@ -33,6 +33,8 @@ export function DummyLogo() {
 
 export function Drawer() {
   const { user } = UserAuth();
+  const [isOpen, setIsOpen] = useState(false);
+  const drawerRef = useRef(null);
   const {
     updateFace,
     updateHair,
@@ -40,6 +42,39 @@ export function Drawer() {
     updateFacialHair,
     updateAccessory,
   } = useAvatar();
+
+  // Handle ESC key press
+  useEffect(() => {
+    const handleEscKey = (event) => {
+      if (event.key === "Escape" && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleEscKey);
+    return () => document.removeEventListener("keydown", handleEscKey);
+  }, [isOpen]);
+
+  // Handle click outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        drawerRef.current &&
+        !drawerRef.current.contains(event.target) &&
+        isOpen
+      ) {
+        // Check if the click is not on the toggle button
+        const toggleButton = event.target.closest("[data-drawer-toggle]");
+        if (!toggleButton) {
+          setIsOpen(false);
+        }
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen]);
+
   useEffect(() => {
     // Get User Avatar Properties
     async function GetUserAvatar() {
@@ -68,21 +103,36 @@ export function Drawer() {
     updateFacialHair,
     updateAccessory,
   ]);
+
+  const toggleDrawer = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div className="flex">
-      <input type="checkbox" id="drawer-toggle" className="hidden peer" />
-
-      <label
-        htmlFor="drawer-toggle"
-        className="absolute left-0 top-3 z-10 inline-block bg-muted p-2 transition-transormation duration-500 hover:text-primary hover:cursor-pointer peer-checked:text-primary group peer-checked:left-[512px]"
+      <button
+        onClick={toggleDrawer}
+        data-drawer-toggle="true"
+        className={`absolute left-0 top-3 z-10 inline-block bg-muted p-2 transition-all duration-500 hover:text-primary hover:cursor-pointer group ${
+          isOpen ? "left-[512px] text-primary" : ""
+        }`}
       >
         <div className="absolute z-10 left-10 top-0 text-3xl font-extrabold">
           Bytes
         </div>
-        <ChevronRight className="peer-checked:group-[]:rotate-180 transition-transform duration-500 " />
-      </label>
+        <ChevronRight
+          className={`transition-transform duration-500 ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        />
+      </button>
 
-      <div className="fixed flex flex-col justify-end z-50 top-0 left-0 w-1/3 h-full transition-all duration-500 transform -translate-x-full bg-muted  border-r-4 rounded-r-xl dark:shadow-primary peer-checked:translate-x-0 ">
+      <div
+        ref={drawerRef}
+        className={`fixed flex flex-col justify-end z-50 top-0 left-0 w-1/3 h-full transition-all duration-500 transform bg-muted border-r-4 rounded-r-xl dark:shadow-primary ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
         <PeepAvatar />
         <div className="mb-4 flex justify-center flex-row">
           <h1 className="text-3xl text-center font-firacode">
