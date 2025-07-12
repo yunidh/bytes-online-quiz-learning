@@ -1,14 +1,17 @@
 import "./global.css";
-import { ThemeProvider } from "./components/theme-provider";
-import Navbar from "./components/Navbar";
+import { ThemeProvider } from "./custom-components/theme-provider";
+import Navbar from "./custom-components/Navbar";
 import { AuthContextProvider } from "./context/AuthContext";
-import AvatarManager from "./components/AvatarManager";
+import AvatarManager from "./custom-components/AvatarManager";
 import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "react-hot-toast";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
       <body>
         <AuthContextProvider>
           <AvatarManager />

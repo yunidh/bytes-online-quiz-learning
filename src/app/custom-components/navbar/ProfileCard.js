@@ -93,14 +93,16 @@ const ProfileCard = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2">
-      <Avatar className="self-center h-16 w-16">
+    <div className="flex flex-col gap-2 w-full max-w-xs mx-auto">
+      <Avatar className="self-center h-12 w-12 sm:h-16 sm:w-16">
         <AvatarImage src={user.photoURL} />
         <AvatarFallback>You</AvatarFallback>
       </Avatar>
-      <div className="font-light">{user.email}</div>
+      <div className="font-light text-sm sm:text-base text-center truncate">
+        {user.email}
+      </div>
       <Separator />
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col p-5 gap-2">
         <div className="flex items-center justify-between">
           <div className="text-sm font-semibold">Stats</div>
           <Button
@@ -115,34 +117,44 @@ const ProfileCard = () => {
             />
           </Button>
         </div>
-        <div className="grid grid-cols-1 gap-2 text-sm">
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">Quizzes Taken:</span>
+        <div className="grid grid-cols-1 gap-2 text-xs sm:text-sm">
+          <div className="flex justify-between items-center">
+            <span className="text-muted-foreground text-xs sm:text-sm">
+              Quizzes Taken:
+            </span>
             <Badge variant="secondary" className="text-xs">
               {stats.quizzesTaken}
             </Badge>
           </div>
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">Quizzes Created:</span>
+          <div className="flex justify-between items-center">
+            <span className="text-muted-foreground text-xs sm:text-sm">
+              Quizzes Created:
+            </span>
             <Badge variant="secondary" className="text-xs">
               {stats.quizzesCreated}
             </Badge>
           </div>
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">Questions Answered:</span>
+          <div className="flex justify-between items-center">
+            <span className="text-muted-foreground text-xs sm:text-sm">
+              Questions Answered:
+            </span>
             <Badge variant="secondary" className="text-xs">
               {stats.questionsAnswered}
             </Badge>
           </div>
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">Correct Answers:</span>
+          <div className="flex justify-between items-center">
+            <span className="text-muted-foreground text-xs sm:text-sm">
+              Correct Answers:
+            </span>
             <Badge variant="outline" className="text-xs text-green-600">
               {stats.correctAnswers}
             </Badge>
           </div>
           {stats.questionsAnswered > 0 && (
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Accuracy:</span>
+            <div className="flex justify-between items-center">
+              <span className="text-muted-foreground text-xs sm:text-sm">
+                Accuracy:
+              </span>
               <Badge variant="outline" className="text-xs text-blue-400">
                 {Math.round(
                   (stats.correctAnswers / stats.questionsAnswered) * 100

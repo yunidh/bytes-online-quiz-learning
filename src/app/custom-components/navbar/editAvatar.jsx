@@ -63,30 +63,41 @@ export function EditAvatar() {
       {/* <Toaster position="bottom-right" reverseOrder={false} /> */}
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline" size="icon" className="ml-2">
-            <LucideEdit size={18} />
+          <Button
+            variant="outline"
+            size="icon"
+            className="ml-1 sm:ml-2 h-8 w-8 sm:h-10 sm:w-10"
+          >
+            <LucideEdit size={16} className="sm:w-[18px] sm:h-[18px]" />
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[600px]">
+        <DialogContent
+          className="sm:max-w-[600px] w-[80vw] max-h-[80vh] overflow-y-auto 
+          max-md:!top-[35%] max-md:!translate-y-0 max-md:!left-[50%] 
+          md:!top-[50%] md:!translate-y-[-50%] md:!left-[50%]
+          !translate-x-[-50%]"
+        >
           <DialogHeader>
-            <DialogTitle>Edit Avatar</DialogTitle>
-            <DialogDescription>Customize your Avatar</DialogDescription>
+            <DialogTitle className="text- sm:text-xl">Edit Avatar</DialogTitle>
+            <DialogDescription className="text-sm sm:text-base">
+              Customize your Avatar
+            </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4 gap-y-8 py-4">
-            <div className="grid grid-cols-3 items-center gap-4 mx-8">
+          <div className="grid gap-4 sm:gap-y-8 py-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 items-center gap-4 mx-4 sm:mx-8">
               <SelectHair />
               <SelectFace />
               <SelectBody />
             </div>
 
-            <div className="grid grid-cols-2 items-center gap-4 mx-28">
+            <div className="grid grid-cols-1 sm:grid-cols-2 items-center gap-4 mx-4 sm:mx-28">
               <SelectAccessory />
               <SelectFacialHair />
             </div>
           </div>
           <DialogFooter>
             <Button
-              className="mx-auto"
+              className="mx-auto text-sm sm:text-base"
               type="submit"
               onClick={changeAvatar}
               disabled={isSaving}

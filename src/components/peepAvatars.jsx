@@ -1,31 +1,7 @@
 "use client";
-import useAvatar from "@/app/components/navbar/avatarStore";
+import { useState, useEffect } from "react";
+import useAvatar from "@/app/custom-components/navbar/avatarStore";
 import Peep from "react-peeps";
-
-const styles = {
-  peepStyle: {
-    width: 300,
-    height: 300,
-    justifyContent: "center",
-    alignSelf: "center",
-  },
-  circleStyle: {
-    backgroundColor: "#F3D34A",
-    width: 270,
-    height: 270,
-    alignSelf: "center",
-    borderRadius: 135,
-    overflow: "hidden",
-    borderWidth: 4,
-    borderColor: "grey",
-    borderStyle: "solid",
-  },
-  showcaseWrapper: {
-    display: "flex",
-    justifyContent: "center",
-    height: "-webkit-fill-available",
-  },
-};
 
 export function PeepAvatar() {
   // Get Values for peeps from useAvatar
@@ -34,6 +10,81 @@ export function PeepAvatar() {
   const face = useAvatar((state) => state.face);
   const hair = useAvatar((state) => state.hair);
   const facialHair = useAvatar((state) => state.facialHair);
+
+  const [dimensions, setDimensions] = useState({
+    peepSize: 300,
+    circleSize: 270,
+    borderRadius: 135,
+  });
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    // This ensures the component only updates after hydration
+    setIsClient(true);
+
+    const updateDimensions = () => {
+      const width = window.innerWidth;
+      if (width < 640) {
+        setDimensions({
+          peepSize: 200,
+          circleSize: 180,
+          borderRadius: 90,
+        });
+      } else if (width < 768) {
+        setDimensions({
+          peepSize: 250,
+          circleSize: 220,
+          borderRadius: 110,
+        });
+      } else {
+        setDimensions({
+          peepSize: 300,
+          circleSize: 270,
+          borderRadius: 135,
+        });
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
+
+  // Use default dimensions during SSR to prevent hydration mismatch
+  const currentDimensions = isClient
+    ? dimensions
+    : {
+        peepSize: 300,
+        circleSize: 270,
+        borderRadius: 135,
+      };
+
+  const styles = {
+    peepStyle: {
+      width: currentDimensions.peepSize,
+      height: currentDimensions.peepSize,
+      justifyContent: "center",
+      alignSelf: "center",
+    },
+    circleStyle: {
+      backgroundColor: "#F3D34A",
+      width: currentDimensions.circleSize,
+      height: currentDimensions.circleSize,
+      alignSelf: "center",
+      borderRadius: currentDimensions.borderRadius,
+      overflow: "hidden",
+      borderWidth: 4,
+      borderColor: "grey",
+      borderStyle: "solid",
+    },
+    showcaseWrapper: {
+      display: "flex",
+      justifyContent: "center",
+      height: "auto",
+      minHeight: `${currentDimensions.peepSize}px`,
+    },
+  };
+
   return (
     <div style={styles.showcaseWrapper}>
       <Peep

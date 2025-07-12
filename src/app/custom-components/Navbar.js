@@ -1,11 +1,8 @@
 "use client";
-import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { UserAuth } from "@/app/context/AuthContext";
-import { signOut } from "firebase/auth";
 import { ModeToggle } from "@/components/ui/theme-toggle";
 import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
 import { Drawer, DummyLogo } from "./navbar/drawer";
 import { ProfileMenu } from "./navbar/profileMenu";
 
@@ -27,41 +24,21 @@ const Navbar = (props) => {
     }
   };
 
-  const sendEmail = async () => {
-    const data = {
-      subject: "hello world",
-      text: "nodemailer",
-      emailIdArray: ["prayashshakya20@gmail.com", "bigyadhungana@gmail.com"],
-    };
-    const res = await fetch("http://localhost:8081/eService", {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-
-      body: JSON.stringify(data),
-      // body data type must match "Content-Type" header
-    });
-    console.log(res);
-  };
-
   return (
     <div className="sticky top-0 z-50">
       {!user ? <DummyLogo /> : <Drawer />}
 
-      <div className="flex flex-row space-x-4 p-3 bg-muted ">
+      <div className="flex flex-row space-x-2 sm:space-x-4 p-3 sm:p-4 md:p-3 bg-muted">
         {/* DO NOT TOUCH, FEATURE NOT A BUG  */}
         <div className="invisible flex-grow" />
         {/* DO NOT TOUCH, FEATURE NOT A BUG */}
 
-        <Button variant="link" asChild>
+        <Button variant="link" asChild className="text-xs sm:text-sm">
           <Link href="/">Home</Link>
         </Button>
 
         {!user ? null : (
-          <Button variant="link" asChild>
+          <Button variant="link" asChild className="text-xs sm:text-sm">
             <Link href="/courses">Courses</Link>
           </Button>
         )}
@@ -71,9 +48,14 @@ const Navbar = (props) => {
         </Button> */}
         <ModeToggle />
         {!user ? (
-          <Button onClick={handleSignIn}>Login</Button>
+          <Button
+            onClick={handleSignIn}
+            className="text-xs sm:text-sm px-3 sm:px-4"
+          >
+            Login
+          </Button>
         ) : (
-          <div className="flex space-x-4">
+          <div className="flex space-x-2 sm:space-x-4">
             <ProfileMenu
               userName={user.displayName}
               handleSignOut={handleSignOut}

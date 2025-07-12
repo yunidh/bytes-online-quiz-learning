@@ -243,7 +243,16 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
     } finally {
       setIsSaving(false);
     }
-  }, [quizTitle, questions, currentQuestionIndex, discardQuiz, onQuizCreated]);
+  }, [
+    quizTitle,
+    questions,
+    currentQuestionIndex,
+    discardQuiz,
+    onQuizCreated,
+    user.displayName,
+    user.email,
+    user.uid,
+  ]);
 
   // Move current question outside to avoid recalculation
   const currentQuestion = questions[currentQuestionIndex];
@@ -254,17 +263,19 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
         <Toaster position="bottom-right" reverseOrder={false} />
       </div> */}
       {isActive ? (
-        <Card className="border-8 border-border transition-all duration-500">
+        <Card className="border-4 sm:border-8 border-border transition-all duration-500">
           <CardHeader className="pt-4 pb-0 group">
             <CardTitle className="group z-0 text-center font-firacode tracking-wide flex">
               <Button
                 onClick={showCreateQuiz}
                 variant="outline"
-                className="text-3xl group font-semibold flex-grow p-10 m-0 hover:scale-105 transition-transform duration-300 border-dashed border-2"
+                className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl group font-semibold flex-grow p-4 sm:p-6 md:p-8 lg:p-10 m-0 hover:scale-105 transition-transform duration-300 border-dashed border-2"
               >
-                <div className="group-hover:heading-gradient transition-all duration-300 flex items-center gap-2">
-                  <Plus className="w-8 h-8" />
-                  Create a Quiz
+                <div className="group-hover:heading-gradient transition-all duration-300 flex items-center gap-1 sm:gap-2 text-center">
+                  <Plus className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 xl:w-8 xl:h-8 flex-shrink-0" />
+                  <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+                    Create a Quiz
+                  </span>
                 </div>
               </Button>
             </CardTitle>
@@ -384,17 +395,19 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
           </CardContent>
         </Card>
       ) : (
-        <Card className="border-8 border-border transition-all duration-500 h-[] overflow-hidden border-dashed">
+        <Card className="border-4 sm:border-8 border-border transition-all duration-500 h-[] overflow-hidden border-dashed">
           <CardHeader className="pt-4 group">
             <CardTitle className="group z-0 text-center font-firacode tracking-wide flex">
               <Button
                 onClick={showCreateQuiz}
                 variant="outline"
-                className="text-3xl group font-semibold flex-grow p-10 m-0 hover:scale-105 transition-transform duration-300 border-dashed border-2"
+                className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl group font-semibold flex-grow p-4 sm:p-6 md:p-8 lg:p-10 m-0 hover:scale-105 transition-transform duration-300 border-dashed border-2"
               >
-                <div className="group-hover:heading-gradient transition-all duration-300 flex items-center gap-2">
-                  <Plus className="w-8 h-8" />
-                  Create a Quiz
+                <div className="group-hover:heading-gradient transition-all duration-300 flex items-center gap-1 sm:gap-2 text-center">
+                  <Plus className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 xl:w-8 xl:h-8 flex-shrink-0" />
+                  <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+                    Create a Quiz
+                  </span>
                 </div>
               </Button>
             </CardTitle>

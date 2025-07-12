@@ -153,10 +153,24 @@ export function LessonCardNew({ quizData, onEditQuiz, onDeleteQuiz }) {
     currentQuestionIndex === activeQuizData.questions.length - 1;
 
   const LessonButton = ({ isLocked }) => {
-    // Limit title to 18 characters
+    // Use state to track client-side rendering to avoid hydration issues
+    const [isClient, setIsClient] = useState(false);
+    const [titleLimit, setTitleLimit] = useState(18); // Default to larger limit
+
+    useEffect(() => {
+      setIsClient(true);
+      const updateTitleLimit = () => {
+        setTitleLimit(window.innerWidth < 640 ? 12 : 18);
+      };
+
+      updateTitleLimit();
+      window.addEventListener("resize", updateTitleLimit);
+      return () => window.removeEventListener("resize", updateTitleLimit);
+    }, []);
+
     const truncatedTitle =
-      activeQuizData.title.length > 18
-        ? activeQuizData.title.substring(0, 18) + "..."
+      activeQuizData.title.length > titleLimit
+        ? activeQuizData.title.substring(0, titleLimit) + "..."
         : activeQuizData.title;
 
     return (
@@ -164,9 +178,9 @@ export function LessonCardNew({ quizData, onEditQuiz, onDeleteQuiz }) {
         disabled={false}
         onClick={showLesson}
         variant="outline"
-        className="text-3xl group center font-semibold flex-grow p-10 m-0 hover:scale-105 transition-transform duration-300"
+        className="text-base sm:text-2xl lg:text-3xl group center font-semibold flex-grow p-4 sm:p-6 lg:p-10 m-0 hover:scale-105 transition-transform duration-300"
       >
-        <div className="group-hover:heading-gradient transition- duration-300">
+        <div className="group-hover:heading-gradient transition-all duration-300">
           {truncatedTitle}
         </div>
       </Button>
@@ -179,15 +193,17 @@ export function LessonCardNew({ quizData, onEditQuiz, onDeleteQuiz }) {
     const isQuestionAnswered = currentSelectedAnswer !== undefined;
 
     return (
-      <CardContent className=" space-y-4">
-        <p className="text-center font-bold text-muted-foreground">
+      <CardContent className="space-y-4 p-4 sm:p-6">
+        <p className="text-center font-bold text-muted-foreground text-sm sm:text-base">
           Question {currentQuestionIndex + 1} of{" "}
           {activeQuizData.questions.length}
         </p>
         <Separator />
 
         <div className="space-y-4">
-          <h4 className="text-lg font-medium">{currentQuestion.question}</h4>
+          <h4 className="text-base sm:text-lg font-medium">
+            {currentQuestion.question}
+          </h4>
 
           <div className="grid grid-cols-1 gap-2">
             {currentQuestion.options.map((option, index) => (
@@ -196,7 +212,7 @@ export function LessonCardNew({ quizData, onEditQuiz, onDeleteQuiz }) {
                 variant={
                   currentSelectedAnswer === option ? "default" : "outline"
                 }
-                className={`p-3 text-left justify-start transition-colors duration-200 ${
+                className={`p-2 sm:p-3 text-left justify-start transition-colors duration-200 text-sm sm:text-base ${
                   currentSelectedAnswer === option
                     ? "bg-primary text-primary-foreground"
                     : "hover:bg-secondary"
@@ -288,9 +304,9 @@ export function LessonCardNew({ quizData, onEditQuiz, onDeleteQuiz }) {
   };
 
   const CollapsedCard = () => (
-    <div className="relative group">
-      <Card className="border-8 border-border transition-all duration-500 overflow-hidden">
-        <CardHeader className="pt-4 group">
+    <div className="relative group p-2">
+      <Card className="border-4 sm:border-8 border-border transition-all duration-500 overflow-hidden">
+        <CardHeader className="group">
           <CardTitle className="group z-0 text-center font-firacode tracking-wide flex">
             <LessonButton title={"Insert Title"} isLocked={false} />
           </CardTitle>
@@ -325,8 +341,8 @@ export function LessonCardNew({ quizData, onEditQuiz, onDeleteQuiz }) {
 
   const ExpandedCard = () => (
     <div className="relative group">
-      <Card className="border-8 border-border transition-all duration-500">
-        <CardHeader className="pt-4 group pb-0">
+      <Card className="border-4 sm:border-8 border-border transition-all duration-500">
+        <CardHeader className="pt-2 group pb-0">
           <CardTitle className="group z-0 font-firacode tracking-wide">
             <div className="flex justify-center mb-2">
               <LessonButton title={"Insert Title"} isLocked={false} />
@@ -334,7 +350,7 @@ export function LessonCardNew({ quizData, onEditQuiz, onDeleteQuiz }) {
           </CardTitle>
           <div className="font-firacode flex justify-center">
             {score && (
-              <div className="flex items-center gap-4 text-lg font-bold">
+              <div className="flex items-center gap-2 sm:gap-4 text-sm sm:text-lg font-bold">
                 <div>
                   Score: {score.correct}/{score.total}
                 </div>
