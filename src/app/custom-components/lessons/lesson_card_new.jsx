@@ -153,8 +153,21 @@ export function LessonCardNew({ quizData, onEditQuiz, onDeleteQuiz }) {
     currentQuestionIndex === activeQuizData.questions.length - 1;
 
   const LessonButton = ({ isLocked }) => {
-    // Limit title to different lengths based on screen size
-    const titleLimit = window.innerWidth < 640 ? 12 : 18;
+    // Use state to track client-side rendering to avoid hydration issues
+    const [isClient, setIsClient] = useState(false);
+    const [titleLimit, setTitleLimit] = useState(18); // Default to larger limit
+
+    useEffect(() => {
+      setIsClient(true);
+      const updateTitleLimit = () => {
+        setTitleLimit(window.innerWidth < 640 ? 12 : 18);
+      };
+
+      updateTitleLimit();
+      window.addEventListener("resize", updateTitleLimit);
+      return () => window.removeEventListener("resize", updateTitleLimit);
+    }, []);
+
     const truncatedTitle =
       activeQuizData.title.length > titleLimit
         ? activeQuizData.title.substring(0, titleLimit) + "..."

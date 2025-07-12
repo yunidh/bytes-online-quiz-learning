@@ -38,30 +38,8 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const sub = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
-      if (currentUser) {
-        try {
-          // console.log('user:',currentUser)
-          const strigifiedUser = JSON.stringify(currentUser);
-          // console.log('strigifiedUser',strigifiedUser)
-          const res = await fetch("http://localhost:8081/users/saveUser", {
-            method: "POST",
-            mode: "cors",
-            headers: {
-              "Content-Type": "application/json",
-              // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-
-            body: strigifiedUser,
-            // body data type must match "Content-Type" header
-          });
-
-          if (!res.ok) {
-            console.error("Failed to save user to backend:", res.status);
-          }
-        } catch (error) {
-          console.error("Error saving user to backend:", error);
-        }
-      }
+      // User authentication is handled by Firebase
+      // No need for backend API calls since we're using Firestore
     });
 
     return () => sub();

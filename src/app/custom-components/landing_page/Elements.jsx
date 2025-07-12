@@ -54,17 +54,17 @@ const Elements = () => {
               <div className="font-bold text-2xl sm:text-5xl mb-3 sm:mb-6 tracking-[10%] heading-gradient">
                 Features included
               </div>
-              <h3 className="font-primary text-lg sm:text-[26px] leading-6 sm:leading-[46px] text-white font-extralight">
+              <h3 className="font-primary text-lg sm:text-[26px] leading-6  text-white font-extralight">
                 Learn, Achieve, Personalize
               </h3>
             </div>
-            <div className="bg-no-repeat mix-blend-lighten mt-8 sm:mt-20 flex justify-center">
+            <div className="bg-no-repeat mix-blend-lighten mt-8 flex justify-center">
               <Image
                 src="/image/quizzes.png"
-                width={550}
-                height={550}
+                width={350}
+                height={350}
                 alt="Quiz features"
-                className="w-64 h-64 sm:w-96 sm:h-96 lg:w-full lg:h-full max-w-[550px]"
+                className="w-64 h-64 sm:w-80 sm:h-80 lg:w-4/5 lg:h-auto object-cover"
               />
             </div>
           </motion.div>

@@ -1,11 +1,8 @@
 "use client";
-import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { UserAuth } from "@/app/context/AuthContext";
-import { signOut } from "firebase/auth";
 import { ModeToggle } from "@/components/ui/theme-toggle";
 import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
 import { Drawer, DummyLogo } from "./navbar/drawer";
 import { ProfileMenu } from "./navbar/profileMenu";
 
@@ -25,26 +22,6 @@ const Navbar = (props) => {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const sendEmail = async () => {
-    const data = {
-      subject: "hello world",
-      text: "nodemailer",
-      emailIdArray: ["prayashshakya20@gmail.com", "bigyadhungana@gmail.com"],
-    };
-    const res = await fetch("http://localhost:8081/eService", {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-
-      body: JSON.stringify(data),
-      // body data type must match "Content-Type" header
-    });
-    console.log(res);
   };
 
   return (

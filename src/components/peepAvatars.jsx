@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import useAvatar from "@/app/components/navbar/avatarStore";
+import useAvatar from "@/app/custom-components/navbar/avatarStore";
 import Peep from "react-peeps";
 
 export function PeepAvatar() {
@@ -16,8 +16,12 @@ export function PeepAvatar() {
     circleSize: 270,
     borderRadius: 135,
   });
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    // This ensures the component only updates after hydration
+    setIsClient(true);
+
     const updateDimensions = () => {
       const width = window.innerWidth;
       if (width < 640) {
@@ -46,19 +50,28 @@ export function PeepAvatar() {
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
+  // Use default dimensions during SSR to prevent hydration mismatch
+  const currentDimensions = isClient
+    ? dimensions
+    : {
+        peepSize: 300,
+        circleSize: 270,
+        borderRadius: 135,
+      };
+
   const styles = {
     peepStyle: {
-      width: dimensions.peepSize,
-      height: dimensions.peepSize,
+      width: currentDimensions.peepSize,
+      height: currentDimensions.peepSize,
       justifyContent: "center",
       alignSelf: "center",
     },
     circleStyle: {
       backgroundColor: "#F3D34A",
-      width: dimensions.circleSize,
-      height: dimensions.circleSize,
+      width: currentDimensions.circleSize,
+      height: currentDimensions.circleSize,
       alignSelf: "center",
-      borderRadius: dimensions.borderRadius,
+      borderRadius: currentDimensions.borderRadius,
       overflow: "hidden",
       borderWidth: 4,
       borderColor: "grey",
@@ -68,7 +81,7 @@ export function PeepAvatar() {
       display: "flex",
       justifyContent: "center",
       height: "auto",
-      minHeight: `${dimensions.peepSize}px`,
+      minHeight: `${currentDimensions.peepSize}px`,
     },
   };
 

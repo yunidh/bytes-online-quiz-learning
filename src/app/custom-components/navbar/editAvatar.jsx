@@ -72,20 +72,18 @@ export function EditAvatar() {
           </Button>
         </DialogTrigger>
         <DialogContent
-          className="sm:max-w-[600px] w-[95vw] max-h-[90vh] overflow-y-auto 
+          className="sm:max-w-[600px] w-[80vw] max-h-[80vh] overflow-y-auto 
           max-md:!top-[35%] max-md:!translate-y-0 max-md:!left-[50%] 
           md:!top-[50%] md:!translate-y-[-50%] md:!left-[50%]
           !translate-x-[-50%]"
         >
           <DialogHeader>
-            <DialogTitle className="text-lg sm:text-xl">
-              Edit Avatar
-            </DialogTitle>
+            <DialogTitle className="text- sm:text-xl">Edit Avatar</DialogTitle>
             <DialogDescription className="text-sm sm:text-base">
               Customize your Avatar
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4 gap-y-6 sm:gap-y-8 py-4">
+          <div className="grid gap-4 sm:gap-y-8 py-4">
             <div className="grid grid-cols-1 sm:grid-cols-3 items-center gap-4 mx-4 sm:mx-8">
               <SelectHair />
               <SelectFace />

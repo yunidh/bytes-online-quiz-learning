@@ -7,6 +7,8 @@ import { PeepAvatar } from "@/components/peepAvatars";
 import { EditAvatar } from "./editAvatar";
 import { UserAuth } from "@/app/context/AuthContext";
 import useAvatar from "./avatarStore";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "/lib/firebase";
 
 export function DummyLogo() {
   return (
@@ -76,24 +78,31 @@ export function Drawer() {
   // }, [isOpen]);
 
   useEffect(() => {
-    // Get User Avatar Properties
+    // Get User Avatar Properties from Firestore
     async function GetUserAvatar() {
-      const res = await fetch(
-        `http://localhost:8081/users/getAvatar?uid=${user.uid}`,
-        { method: "GET", cache: "no-store" }
-      );
-      const Data = await res.json();
+      if (!user?.uid) return;
+
       try {
-        if (Data.statusCode === 200) {
-          const avatarProps = Data.data;
-          updateFace(avatarProps.face);
-          updateHair(avatarProps.hair);
-          updateBody(avatarProps.body);
-          updateFacialHair(avatarProps.facialHair);
-          updateAccessory(avatarProps.accessory);
+        const userDocRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          const avatarProps = userData.avatar;
+
+          if (avatarProps) {
+            updateFace(avatarProps.face);
+            updateHair(avatarProps.hair);
+            updateBody(avatarProps.body);
+            updateFacialHair(avatarProps.facialHair);
+            updateAccessory(avatarProps.accessory);
+          }
         }
-      } catch {}
+      } catch (error) {
+        console.error("Error fetching user avatar:", error);
+      }
     }
+
     GetUserAvatar();
   }, [
     user,

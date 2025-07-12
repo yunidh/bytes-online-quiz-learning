@@ -1,7 +1,7 @@
 "use client";
-import { LessonCardNew } from "@/app/components/lessons/lesson_card_new";
-import { CreateQuizCard } from "@/app/components/lessons/create_quiz_card";
-import { EditQuizCard } from "@/app/components/lessons/edit_quiz_card";
+import { LessonCardNew } from "@/app/custom-components/lessons/lesson_card_new";
+import { CreateQuizCard } from "@/app/custom-components/lessons/create_quiz_card";
+import { EditQuizCard } from "@/app/custom-components/lessons/edit_quiz_card";
 import {
   collection,
   getDocs,

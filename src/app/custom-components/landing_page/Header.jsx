@@ -43,7 +43,7 @@ const Header = () => {
               repeat={Infinity}
             />
           </h1>
-          <p className="text-[#ADB7BE] text-sm sm:text-base lg:text-lg xl:text-xl mb-4 sm:mb-6 text-justify lg:text-left max-w-lg mx-auto lg:mx-0">
+          <p className="text-[#ADB7BE] text-sm sm:text-base lg:text-lg xl:text-xl mb-4 sm:mb-6 text-justify max-w-lg mx-auto lg:mx-0">
             Our gamified online platform transforms education into an immersive
             adventure. Enhance your learning skills with our innovative gamified
             learning platform where education meets excitement. Join us and

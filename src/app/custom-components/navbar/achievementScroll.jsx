@@ -97,7 +97,9 @@ export function AchievementScroll() {
       title: "Demo Achievement",
       description: "This is a demo to test the accordion",
       icon: "🎯",
-      unlockedAt: { seconds: Date.now() / 1000 },
+      unlockedAt: {
+        seconds: Math.floor(new Date("2024-01-01").getTime() / 1000),
+      }, // Use fixed date for demo
     };
 
     const hasDemoAchievement = achievements.some((ach) => ach.id === "demo");
