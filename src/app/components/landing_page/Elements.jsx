@@ -24,7 +24,10 @@ const services = [
 
 const Elements = () => {
   return (
-    <section className="mt-56 flex items-center" id="services">
+    <section
+      className="mt-28 sm:mt-56 flex items-center px-4 sm:px-0"
+      id="services"
+    >
       <div className="custom-shape-divider-top-1703863178">
         <svg
           data-name="Layer 1"
@@ -38,25 +41,31 @@ const Elements = () => {
           ></path> */}
         </svg>
       </div>
-      <div className="ml-32">
-        <div className="grid grid-cols-2 gap-20 ">
+      <div className="ml-4 sm:ml-32 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-20">
           <motion.div
             variants={fadeIn("right", 0.3)}
             initial="hidden"
             whileInView={"show"}
             viewport={{ once: false, amount: 0.3 }}
-            className="flex-1 lg:bg-quizzes lg:bg-bottom bg-no-repeat mb-12 lg:mb-0 "
+            className="flex-1 lg:bg-quizzes lg:bg-bottom bg-no-repeat mb-6 sm:mb-12 lg:mb-0"
           >
-            <div className="absolute text-center ml-20">
-              <div className="font-bold text-5xl mb-6 tracking-[10%] heading-gradient">
+            <div className="relative text-center ml-4 sm:ml-20">
+              <div className="font-bold text-2xl sm:text-5xl mb-3 sm:mb-6 tracking-[10%] heading-gradient">
                 Features included
               </div>
-              <h3 className=" font-primary text-[26px] leading-[46px] text-white font-extralight ">
+              <h3 className="font-primary text-lg sm:text-[26px] leading-6 sm:leading-[46px] text-white font-extralight">
                 Learn, Achieve, Personalize
               </h3>
             </div>
-            <div className="bg-no-repeat mix-blend-lighten mt-20">
-              <Image src="/image/quizzes.png" width={550} height={550} />
+            <div className="bg-no-repeat mix-blend-lighten mt-8 sm:mt-20 flex justify-center">
+              <Image
+                src="/image/quizzes.png"
+                width={550}
+                height={550}
+                alt="Quiz features"
+                className="w-64 h-64 sm:w-96 sm:h-96 lg:w-full lg:h-full max-w-[550px]"
+              />
             </div>
           </motion.div>
 
@@ -65,21 +74,21 @@ const Elements = () => {
             initial="hidden"
             whileInView={"show"}
             viewport={{ once: false, amount: 0.3 }}
-            className=" flex-1"
+            className="flex-1"
           >
             <div>
               {services.map((service, index) => {
                 const { name, description } = service;
                 return (
                   <div
-                    className="border-b border-white/20 mr-20 h-[146px] mb-[38px] flex text-right mt-12"
+                    className="border-b border-white/20 mr-4 sm:mr-20 h-auto sm:h-[146px] mb-6 sm:mb-[38px] flex text-left sm:text-right mt-6 sm:mt-12 pb-4 sm:pb-0"
                     key={index}
                   >
-                    <div className="max-w-[500px]">
-                      <h4 className="text-[20px] tracking-wider text-white font-semibold mb-6">
+                    <div className="max-w-full sm:max-w-[500px]">
+                      <h4 className="text-lg sm:text-[20px] tracking-wider text-white font-semibold mb-3 sm:mb-6">
                         {name}
                       </h4>
-                      <p className="f text-white ont-secondary leading-tight ">
+                      <p className="text-white text-sm sm:text-base leading-tight">
                         {description}
                       </p>
                     </div>

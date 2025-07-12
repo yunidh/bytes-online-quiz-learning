@@ -36,9 +36,9 @@ const Connect = () => {
   };
 
   return (
-    <section className=" lg:py-24 lg:h-[60%] mt-40 flex items-center py-16 bg-black opacity-60 w-full px-10  ">
+    <section className="lg:py-24 lg:h-[60%] mt-32 sm:mt-48 md:mt-60 lg:mt-40 flex items-center py-8 sm:py-16 bg-black opacity-60 w-full px-4 sm:px-10">
       <div className="container mx-auto">
-        <div className=" flex flex-col lg:flex-row">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
           {/*text */}
           <motion.div
             variants={fadeIn("right", 0.3)}
@@ -47,8 +47,8 @@ const Connect = () => {
             viewport={{ once: false, amount: 0.3 }}
             className="flex-1 flex justify-start items-center"
           >
-            <div>
-              <h2 className=" text-7xl leading-none mb-12 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 ">
+            <div className="mt-4 sm:mt-10">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl leading-none mb-4 sm:mb-6 md:mb-8 lg:mb-12 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
                 Ask us <br />
                 your questions
               </h2>
@@ -60,31 +60,30 @@ const Connect = () => {
             initial="hidden"
             whileInView={"show"}
             viewport={{ once: false, amount: 0.3 }}
-            className="flex-1 border rounded-2xl flex flex-col gap-y-6 pb-24 p-6 items-start"
+            className="flex-1 border rounded-2xl flex flex-col gap-y-4 sm:gap-y-6 pb-12 sm:pb-24 p-4 sm:p-6 items-start"
           >
             <input
-              className="bg-transparent border-b py-3 outline-none w-full placeholder:text-white focus:border-purple-400 transition-all "
+              className="bg-transparent border-b py-2 sm:py-3 outline-none w-full placeholder:text-white focus:border-purple-400 transition-all text-sm sm:text-base"
               type="text"
               placeholder="Your name"
               onChange={(e) => setName(e.target.value)}
             />
             <input
-              className="bg-transparent border-b py-3 outline-none w-full placeholder:text-white focus:border-purple-400 transition-all "
+              className="bg-transparent border-b py-2 sm:py-3 outline-none w-full placeholder:text-white focus:border-purple-400 transition-all text-sm sm:text-base"
               type="text"
               placeholder={user ? user.email : "Your email"}
               onChange={(e) => setEmail(e.target.value)}
             />
             <textarea
-              className="bg-transparent border-b py-12 outline-none w-full placeholder:text-white focus:border-purple-400 transition-all resize-none mb-12"
+              className="bg-transparent border-b py-6 sm:py-12 outline-none w-full placeholder:text-white focus:border-purple-400 transition-all resize-none mb-6 sm:mb-12 text-sm sm:text-base"
               placeholder="Your Message"
               onChange={(e) => setText(e.target.value)}
             ></textarea>
             <button
-              className="px-10 py-4 w-full text-lg sm:w-fit rounded-full mr-10 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 hover:bg-slate-200 text-white"
+              className="px-6 sm:px-10 py-3 sm:py-4 w-full sm:w-fit text-base sm:text-lg rounded-full mr-0 sm:mr-10 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 hover:bg-slate-200 text-white transition-all"
               variant="link"
               onClick={sendEmail}
             >
-              {" "}
               Send Message
             </button>
           </motion.form>

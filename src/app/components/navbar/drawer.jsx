@@ -20,12 +20,12 @@ export function DummyLogo() {
 
       <label
         htmlFor="drawer-toggle"
-        className="absolute left-0 top-3 z-10 inline-block bg-muted p-2 transition-transormation duration-500 hover:text-primary hover:cursor-pointer peer-checked:text-primary group peer-checked:left-[512px]"
+        className="absolute left-0 top-2 sm:top-3 z-[60] inline-block bg-muted p-1 sm:p-2 transition-transormation duration-500 hover:text-primary hover:cursor-pointer peer-checked:text-primary group peer-checked:left-4 sm:peer-checked:left-[280px] lg:peer-checked:left-[512px]"
       >
-        <div className="absolute z-10 left-10 top-0 text-3xl font-extrabold">
+        <div className="absolute z-10 left-6 sm:left-10 top-0 text-lg sm:text-3xl font-extrabold">
           Bytes
         </div>
-        <ChevronRight className="peer-checked:group-[]:rotate-180 transition-transform duration-500 " />
+        <ChevronRight className="peer-checked:group-[]:rotate-180 transition-transform duration-500 w-4 h-4 sm:w-6 sm:h-6" />
       </label>
     </div>
   );
@@ -55,25 +55,25 @@ export function Drawer() {
     return () => document.removeEventListener("keydown", handleEscKey);
   }, [isOpen]);
 
-  // Handle click outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        drawerRef.current &&
-        !drawerRef.current.contains(event.target) &&
-        isOpen
-      ) {
-        // Check if the click is not on the toggle button
-        const toggleButton = event.target.closest("[data-drawer-toggle]");
-        if (!toggleButton) {
-          setIsOpen(false);
-        }
-      }
-    };
+  // // Handle click outside
+  // useEffect(() => {
+  //   const handleClickOutside = (event) => {
+  //     if (
+  //       drawerRef.current &&
+  //       !drawerRef.current.contains(event.target) &&
+  //       isOpen
+  //     ) {
+  //       // Check if the click is not on the toggle button
+  //       const toggleButton = event.target.closest("[data-drawer-toggle]");
+  //       if (!toggleButton) {
+  //         setIsOpen(false);
+  //       }
+  //     }
+  //   };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isOpen]);
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => document.removeEventListener("mousedown", handleClickOutside);
+  // }, [isOpen]);
 
   useEffect(() => {
     // Get User Avatar Properties
@@ -110,18 +110,26 @@ export function Drawer() {
 
   return (
     <div className="flex">
+      {/* Backdrop overlay for mobile and tablet */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
       <button
         onClick={toggleDrawer}
         data-drawer-toggle="true"
-        className={`absolute left-0 top-3 z-10 inline-block bg-muted p-2 transition-all duration-500 hover:text-primary hover:cursor-pointer group ${
-          isOpen ? "left-[512px] text-primary" : ""
+        className={`fixed left-0 top-3 sm:top-4 md:top-3 z-[60] inline-block bg-muted p-2 sm:p-3 md:p-2 transition-all duration-500 hover:text-primary hover:cursor-pointer group ${
+          isOpen ? "left-4 md:left-[320px] lg:left-[512px] text-primary" : ""
         }`}
       >
-        <div className="absolute z-10 left-10 top-0 text-3xl font-extrabold">
+        <div className="absolute z-10 left-6 sm:left-10 top-0 text-lg sm:text-2xl md:text-3xl font-extrabold">
           Bytes
         </div>
         <ChevronRight
-          className={`transition-transform duration-500 ${
+          className={`transition-transform duration-500 w-4 h-4 sm:w-6 sm:h-6 ${
             isOpen ? "rotate-180" : ""
           }`}
         />
@@ -129,19 +137,21 @@ export function Drawer() {
 
       <div
         ref={drawerRef}
-        className={`fixed flex flex-col justify-end z-50 top-0 left-0 w-1/3 h-full transition-all duration-500 transform bg-muted border-r-4 rounded-r-xl dark:shadow-primary ${
+        className={`fixed flex flex-col justify-start z-50 top-0 left-0 w-full md:w-[320px] lg:w-1/3 h-full transition-all duration-500 transform bg-muted border-r-4 rounded-r-xl dark:shadow-primary pt-16 sm:pt-20 md:pt-16 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <PeepAvatar />
-        <div className="mb-4 flex justify-center flex-row">
-          <h1 className="text-3xl text-center font-firacode">
+        <div className="flex-shrink-0 px-4 mb-2 sm:mb-4">
+          <PeepAvatar />
+        </div>
+        <div className="flex-shrink-0 mb-2 sm:mb-4 flex justify-center flex-row items-center px-4">
+          <h1 className="text-base sm:text-xl md:text-2xl lg:text-3xl text-center font-firacode truncate max-w-[200px] sm:max-w-[250px] md:max-w-none">
             {user.displayName}
           </h1>
           <EditAvatar />
         </div>
-        <Separator className="my-4" />
-        <div className="mb-10 mx-auto h-72 w-4/5">
+        <Separator className="flex-shrink-0 my-2 sm:my-4" />
+        <div className="flex-1 mx-auto w-4/5 mb-4 sm:mb-6 overflow-hidden">
           <AchievementScroll />
         </div>
       </div>

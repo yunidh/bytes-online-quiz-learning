@@ -149,8 +149,8 @@ export default function courses() {
   }
 
   return (
-    <main className="mx-48 my-24">
-      <div className="grid grid-cols-2 gap-8 gap-x-40">
+    <main className="mx-4 sm:mx-8 lg:mx-48 my-12 sm:my-24">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 lg:gap-x-40">
         {/* Create Quiz Card - Only show if user is logged in */}
         {user && (
           <CreateQuizCard
@@ -183,7 +183,7 @@ export default function courses() {
             </div>
           ))
         ) : (
-          <div className="col-span-1 text-center text-muted-foreground">
+          <div className="col-span-1 lg:col-span-2 text-center text-muted-foreground">
             {user ? "No quizzes available" : "Please login to view quizzes"}
           </div>
         )}

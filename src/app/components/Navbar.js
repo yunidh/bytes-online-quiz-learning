@@ -51,17 +51,17 @@ const Navbar = (props) => {
     <div className="sticky top-0 z-50">
       {!user ? <DummyLogo /> : <Drawer />}
 
-      <div className="flex flex-row space-x-4 p-3 bg-muted ">
+      <div className="flex flex-row space-x-2 sm:space-x-4 p-3 sm:p-4 md:p-3 bg-muted">
         {/* DO NOT TOUCH, FEATURE NOT A BUG  */}
         <div className="invisible flex-grow" />
         {/* DO NOT TOUCH, FEATURE NOT A BUG */}
 
-        <Button variant="link" asChild>
+        <Button variant="link" asChild className="text-xs sm:text-sm">
           <Link href="/">Home</Link>
         </Button>
 
         {!user ? null : (
-          <Button variant="link" asChild>
+          <Button variant="link" asChild className="text-xs sm:text-sm">
             <Link href="/courses">Courses</Link>
           </Button>
         )}
@@ -71,9 +71,14 @@ const Navbar = (props) => {
         </Button> */}
         <ModeToggle />
         {!user ? (
-          <Button onClick={handleSignIn}>Login</Button>
+          <Button
+            onClick={handleSignIn}
+            className="text-xs sm:text-sm px-3 sm:px-4"
+          >
+            Login
+          </Button>
         ) : (
-          <div className="flex space-x-4">
+          <div className="flex space-x-2 sm:space-x-4">
             <ProfileMenu
               userName={user.displayName}
               handleSignOut={handleSignOut}

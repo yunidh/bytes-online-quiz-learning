@@ -159,15 +159,20 @@ export function AchievementScroll() {
   };
 
   return (
-    <ScrollArea className="h-72 w-auto rounded-md border-4">
-      <div className="p-4">
-        <h2 className="mb-4 text-lg font-bold leading-none text-center">
+    <ScrollArea className="h-60 sm:h-72 rounded-md border-2 sm:border-4">
+      <div className="p-2 sm:p-4">
+        <h2 className="mb-3 sm:mb-4 text-base sm:text-lg font-bold leading-none text-center">
           Achievements
         </h2>
 
         {/* Demo button - remove this in production */}
-        <div className="mb-4 text-center space-x-2">
-          <Button onClick={toggleDemoAchievement} size="sm" variant="outline">
+        <div className="mb-3 sm:mb-4 text-center space-x-2">
+          <Button
+            onClick={toggleDemoAchievement}
+            size="sm"
+            variant="outline"
+            className="text-xs sm:text-sm"
+          >
             {achievements.some((ach) => ach.id === "demo")
               ? "Remove Demo Achievement"
               : "Add Demo Achievement"}
@@ -175,9 +180,11 @@ export function AchievementScroll() {
         </div>
 
         {displayAchievements.length === 0 ? (
-          <div className="text-center text-muted-foreground py-8">
-            <p className="text-sm">Complete quizzes to unlock achievements!</p>
-            <div className="mt-4 space-y-2">
+          <div className="text-center text-muted-foreground py-6 sm:py-8">
+            <p className="text-xs sm:text-sm">
+              Complete quizzes to unlock achievements!
+            </p>
+            <div className="mt-3 sm:mt-4 space-y-2">
               {availableAchievements.map((achievement) => (
                 <div key={achievement.id} className="text-xs opacity-60">
                   {achievement.icon} {achievement.title}
@@ -186,7 +193,7 @@ export function AchievementScroll() {
             </div>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             {displayAchievements.map((achievement, index) => {
               const details = getAchievementDetails(achievement);
               const isExpanded = expandedAchievement === achievement.id;
@@ -206,12 +213,13 @@ export function AchievementScroll() {
                     className="w-full p-0 h-auto justify-start hover:bg-transparent group"
                     onClick={() => toggleAchievement(achievement.id)}
                   >
-                    <CardHeader className="p-3 w-full flex flex-row items-center justify-between group-hover:bg-white/50 dark:group-hover:bg-black/20 transition-colors duration-200 rounded-t-lg">
-                      {" "}
-                      <div className="flex items-center gap-3">
-                        <span className="text-xl">{achievement.icon}</span>
+                    <CardHeader className="p-2 sm:p-3 w-full flex flex-row items-center justify-between group-hover:bg-white/50 dark:group-hover:bg-black/20 transition-colors duration-200 rounded-t-lg">
+                      <div className="flex items-center gap-2 sm:gap-3">
+                        <span className="text-lg sm:text-xl">
+                          {achievement.icon}
+                        </span>
                         <div className="text-left">
-                          <span className="font-semibold text-sm">
+                          <span className="font-semibold text-xs sm:text-sm">
                             {achievement.title}
                           </span>
                           <p className="text-xs text-muted-foreground mt-1">
@@ -219,14 +227,14 @@ export function AchievementScroll() {
                           </p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs text-muted-foreground opacity-60">
+                      <div className="flex items-center gap-1 sm:gap-2">
+                        <span className="text-xs text-muted-foreground opacity-60 hidden sm:block">
                           {isExpanded ? "Hide details" : "View details"}
                         </span>
                         {isExpanded ? (
-                          <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform duration-200" />
+                          <ChevronDown className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground transition-transform duration-200" />
                         ) : (
-                          <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform duration-200" />
+                          <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground transition-transform duration-200" />
                         )}
                       </div>
                     </CardHeader>
@@ -234,23 +242,23 @@ export function AchievementScroll() {
 
                   {/* Accordion Content */}
                   {isExpanded && (
-                    <CardContent className="bg-secondary/50 p-4 border-t animate-in slide-in-from-top-2 duration-300">
-                      <div className="space-y-4">
-                        <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg border border-blue-200 dark:border-blue-800">
-                          <h4 className="font-semibold text-sm mb-2 text-blue-700 dark:text-blue-300 flex items-center gap-2">
+                    <CardContent className="bg-secondary/50 p-3 sm:p-4 border-t animate-in slide-in-from-top-2 duration-300">
+                      <div className="space-y-3 sm:space-y-4">
+                        <div className="bg-blue-50 dark:bg-blue-900/20 p-2 sm:p-3 rounded-lg border border-blue-200 dark:border-blue-800">
+                          <h4 className="font-semibold text-xs sm:text-sm mb-1 sm:mb-2 text-blue-700 dark:text-blue-300 flex items-center gap-2">
                             Requirement
                           </h4>
-                          <p className="text-sm text-blue-600 dark:text-blue-400">
+                          <p className="text-xs sm:text-sm text-blue-600 dark:text-blue-400">
                             {details.requirement}
                           </p>
                         </div>
 
                         {achievement.unlockedAt && (
-                          <div className="bg-green-50 dark:bg-gray-600 p-3 rounded-lg border text-sm border-green-200 dark:border-green-800">
-                            <h5 className="font-semibold text-s mb-2 text-green-700 dark:text-green-300 flex items-center gap-2">
+                          <div className="bg-green-50 dark:bg-gray-600 p-2 sm:p-3 rounded-lg border text-xs sm:text-sm border-green-200 dark:border-green-800">
+                            <h5 className="font-semibold text-xs sm:text-sm mb-1 sm:mb-2 text-green-700 dark:text-green-300 flex items-center gap-2">
                               Unlocked
                             </h5>
-                            <p className="text-s text-green-600 dark:text-green-400">
+                            <p className="text-xs sm:text-sm text-green-600 dark:text-green-400">
                               {new Date(
                                 achievement.unlockedAt.seconds * 1000
                               ).toLocaleDateString("en-US", {
