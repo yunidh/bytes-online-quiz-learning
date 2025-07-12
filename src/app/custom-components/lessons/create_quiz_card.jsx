@@ -243,7 +243,16 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
     } finally {
       setIsSaving(false);
     }
-  }, [quizTitle, questions, currentQuestionIndex, discardQuiz, onQuizCreated]);
+  }, [
+    quizTitle,
+    questions,
+    currentQuestionIndex,
+    discardQuiz,
+    onQuizCreated,
+    user.displayName,
+    user.email,
+    user.uid,
+  ]);
 
   // Move current question outside to avoid recalculation
   const currentQuestion = questions[currentQuestionIndex];

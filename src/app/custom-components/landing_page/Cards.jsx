@@ -128,17 +128,19 @@ const Cards = () => {
           initial="hidden"
           whileInView={"show"}
           viewport={{ once: false, amount: 0.2 }}
-          className="flex-1 lg:hidden mt-8"
+          className="flex-1 lg:hidden mt-8 bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-purple-600/20"
         >
           <Carousel className="w-full max-w-lg mx-auto">
             <CarouselContent>
               {carouselItems.map((item) => (
                 <CarouselItem key={item.id}>
                   <div className="relative overflow-hidden border-2 border-white/50 rounded-xl w-full h-[350px] md:h-[400px]">
-                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 p-4">
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-purple-600/20 p-4">
                       {item.isMain ? (
-                        <img
+                        <Image
                           src={item.image}
+                          width={320}
+                          height={320}
                           className="max-w-full max-h-full object-contain"
                           alt={item.title}
                         />

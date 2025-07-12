@@ -62,7 +62,7 @@ async function getQuizData(user) {
   }
 }
 
-export default function courses() {
+export default function Courses() {
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingQuiz, setEditingQuiz] = useState(null);
