@@ -1,5 +1,4 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-## Hosted at Vercel - https://bytes-peach.vercel.app/
+##[bytes-peach.vercel.app](https://bytes-peach.vercel.app/)
 
 ## Features of Bytes:
 
