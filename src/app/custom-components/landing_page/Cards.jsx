@@ -82,13 +82,13 @@ const Cards = () => {
             viewport={{ once: false, amount: 0.2 }}
             className="flex-1"
           >
-            <div className="group relative overflow-hidden border-2 border-white/50 rounded-xl w-full h-[400px] ">
+            <div className="group relative overflow-hidden border-2 border-white/50 rounded-xl w-full h-[400px]">
               <div className="group-hover:bg-black/70 w-full h-full absolute z-40 transition-all duration-300"></div>
-              <div className="group-hover:scale-105 transition-all duration-500 w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-purple-600/20 p-8 rounded-xl">
+              <div className="group-hover:scale-105 transition-all duration-500 w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-purple-600/20 rounded-xl overflow-hidden">
                 <Image
-                  layout="fill"
                   src="/image/screen1.png"
-                  className="max-w-[100%] max-h-[100%] object-contain"
+                  fill
+                  className="object-cover"
                   alt="Course preview"
                 />
               </div>
@@ -135,24 +135,13 @@ const Cards = () => {
               {carouselItems.map((item) => (
                 <CarouselItem key={item.id}>
                   <div className="relative overflow-hidden border-2 border-white/50 rounded-xl w-full h-[350px] md:h-[400px]">
-                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-purple-600/20 p-4">
-                      {item.isMain ? (
-                        <Image
-                          src={item.image}
-                          width={320}
-                          height={320}
-                          className="max-w-full max-h-full object-contain"
-                          alt={item.title}
-                        />
-                      ) : (
-                        <Image
-                          src={item.image}
-                          width={320}
-                          height={320}
-                          className="max-w-full max-h-full object-contain"
-                          alt={item.title}
-                        />
-                      )}
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-purple-600/20 rounded-xl overflow-hidden">
+                      <Image
+                        src={item.image}
+                        fill
+                        className="object-cover"
+                        alt={item.title}
+                      />
                     </div>
                     {/* Caption below the image */}
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4 text-center">
@@ -183,12 +172,11 @@ const Cards = () => {
           {/*Avatar Card*/}
           <div className="group relative overflow-hidden border-2 border-white/50 rounded-xl w-full h-[320px]">
             <div className="group-hover:bg-black/70 w-full h-full absolute z-40 transition-all duration-300"></div>
-            <div className="group-hover:scale-105 transition-all duration-500 w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-purple-600/20 p-4 rounded-xl">
+            <div className="group-hover:scale-105 transition-all duration-500 w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-purple-600/20 rounded-xl overflow-hidden">
               <Image
                 src="/image/Avatar.png"
-                width={240}
-                height={240}
-                className="max-w-[120%] max-h-[120%] object-contain"
+                fill
+                className="object-cover"
                 alt="Avatar"
               />
             </div>
@@ -205,12 +193,11 @@ const Cards = () => {
           {/*Achievements Card*/}
           <div className="group relative overflow-hidden border-2 border-white/50 rounded-xl w-full h-[320px]">
             <div className="group-hover:bg-black/70 w-full h-full absolute z-40 transition-all duration-300"></div>
-            <div className="group-hover:scale-105 transition-all duration-500 w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-purple-600/20 p-4 rounded-xl">
+            <div className="group-hover:scale-105 transition-all duration-500 w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-purple-600/20 rounded-xl overflow-hidden">
               <Image
                 src="/image/Achievement.png"
-                width={240}
-                height={240}
-                className="max-w-[120%] max-h-[120%] object-contain"
+                fill
+                className="object-cover"
                 alt="Achievement"
               />
             </div>
@@ -227,12 +214,11 @@ const Cards = () => {
           {/*Statistics Card*/}
           <div className="group relative overflow-hidden border-2 border-white/50 rounded-xl w-full h-[320px]">
             <div className="group-hover:bg-black/70 w-full h-full absolute z-40 transition-all duration-300"></div>
-            <div className="group-hover:scale-105 transition-all duration-500 w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-purple-600/20 p-4 rounded-xl">
+            <div className="group-hover:scale-105 transition-all duration-500 w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-purple-600/20 rounded-xl overflow-hidden">
               <Image
                 src="/image/stats.png"
-                width={240}
-                height={240}
-                className="max-w-[120%] max-h-[120%] object-contain"
+                fill
+                className="object-cover"
                 alt="Statistics"
               />
             </div>
@@ -249,12 +235,11 @@ const Cards = () => {
           {/*Customization Card*/}
           <div className="group relative overflow-hidden border-2 border-white/50 rounded-xl w-full h-[320px]">
             <div className="group-hover:bg-black/70 w-full h-full absolute z-40 transition-all duration-300"></div>
-            <div className="group-hover:scale-105 transition-all duration-500 w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-purple-600/20 p-4 rounded-xl">
+            <div className="group-hover:scale-105 transition-all duration-500 w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-purple-600/20 rounded-xl overflow-hidden">
               <Image
                 src="/image/custom.png"
-                width={240}
-                height={240}
-                className="max-w-[120%] max-h-[120%] object-contain"
+                fill
+                className="object-cover"
                 alt="Customization"
               />
             </div>

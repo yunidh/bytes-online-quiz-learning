@@ -233,7 +233,7 @@ export const EditQuizCard = memo(function EditQuizCard({
     } finally {
       setIsDeleting(false);
     }
-  }, [quizTitle, onQuizUpdated, user.uid, quizData.id]);
+  }, [quizTitle, onQuizUpdated, user?.uid, quizData.id]);
 
   // Move current question outside to avoid recalculation
   const currentQuestion = questions[currentQuestionIndex];
