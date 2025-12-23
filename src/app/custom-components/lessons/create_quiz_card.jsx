@@ -53,8 +53,14 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
   const { user } = UserAuth();
 
   const showCreateQuiz = useCallback(() => {
+    if (!user) {
+      toast.error("Login to access this feature", {
+        duration: 3000,
+      });
+      return;
+    }
     setActive(!isActive);
-  }, [isActive]);
+  }, [isActive, user]);
 
   const handleQuestionChange = useCallback(
     (value) => {
@@ -249,9 +255,9 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
     currentQuestionIndex,
     discardQuiz,
     onQuizCreated,
-    user.displayName,
-    user.email,
-    user.uid,
+    user?.displayName,
+    user?.email,
+    user?.uid,
   ]);
 
   // Move current question outside to avoid recalculation
@@ -265,17 +271,15 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
       {isActive ? (
         <Card className="border-4 sm:border-8 border-border transition-all duration-500">
           <CardHeader className="pt-4 pb-0 group">
-            <CardTitle className="group z-0 text-center font-firacode tracking-wide flex">
+            <CardTitle className="group z-0 text-center font-firacode tracking-wide flex justify-center">
               <Button
                 onClick={showCreateQuiz}
                 variant="outline"
-                className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl group font-semibold flex-grow p-4 sm:p-6 md:p-8 lg:p-10 m-0 hover:scale-105 transition-transform duration-300 border-dashed border-2"
+                className="text-base sm:text-lg md:text-xl group font-semibold w-full px-4 py-6 sm:py-8 hover:scale-[1.02] transition-transform duration-300 border-dashed border-2"
               >
-                <div className="group-hover:heading-gradient transition-all duration-300 flex items-center gap-1 sm:gap-2 text-center">
-                  <Plus className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 xl:w-8 xl:h-8 flex-shrink-0" />
-                  <span className="whitespace-nowrap overflow-hidden text-ellipsis">
-                    Create a Quiz
-                  </span>
+                <div className="group-hover:heading-gradient transition-all duration-300 flex items-center gap-2 justify-center">
+                  <Plus className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" />
+                  <span className="truncate">Create a Quiz</span>
                 </div>
               </Button>
             </CardTitle>
@@ -397,17 +401,15 @@ export const CreateQuizCard = memo(function CreateQuizCard({ onQuizCreated }) {
       ) : (
         <Card className="border-4 sm:border-8 border-border transition-all duration-500 h-[] overflow-hidden border-dashed">
           <CardHeader className="pt-4 group">
-            <CardTitle className="group z-0 text-center font-firacode tracking-wide flex">
+            <CardTitle className="group z-0 text-center font-firacode tracking-wide flex justify-center">
               <Button
                 onClick={showCreateQuiz}
                 variant="outline"
-                className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl group font-semibold flex-grow p-4 sm:p-6 md:p-8 lg:p-10 m-0 hover:scale-105 transition-transform duration-300 border-dashed border-2"
+                className="text-base sm:text-lg md:text-xl group font-semibold w-full px-4 py-6 sm:py-8 hover:scale-[1.02] transition-transform duration-300 border-dashed border-2"
               >
-                <div className="group-hover:heading-gradient transition-all duration-300 flex items-center gap-1 sm:gap-2 text-center">
-                  <Plus className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 xl:w-8 xl:h-8 flex-shrink-0" />
-                  <span className="whitespace-nowrap overflow-hidden text-ellipsis">
-                    Create a Quiz
-                  </span>
+                <div className="group-hover:heading-gradient transition-all duration-300 flex items-center gap-2 justify-center">
+                  <Plus className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" />
+                  <span className="truncate">Create a Quiz</span>
                 </div>
               </Button>
             </CardTitle>

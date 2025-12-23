@@ -9,26 +9,26 @@ import { UserAuth } from "@/app/context/AuthContext";
 import useAvatar from "./avatarStore";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "/lib/firebase";
+import { toast } from "react-hot-toast";
 
 export function DummyLogo() {
+  const handleClick = () => {
+    toast.error("Login to access this feature", {
+      duration: 3000,
+    });
+  };
+
   return (
     <div>
-      <input
-        type="checkbox"
-        disabled={true}
-        id="drawer-toggle"
-        className="hidden peer"
-      />
-
-      <label
-        htmlFor="drawer-toggle"
-        className="absolute left-0 top-2 sm:top-3 z-[60] inline-block bg-muted p-1 sm:p-2 transition-transormation duration-500 hover:text-primary hover:cursor-pointer peer-checked:text-primary group peer-checked:left-4 sm:peer-checked:left-[280px] lg:peer-checked:left-[512px]"
+      <button
+        onClick={handleClick}
+        className="absolute left-0 top-2 sm:top-3 z-[60] inline-block bg-muted p-1 sm:p-2 transition-transormation duration-500 hover:text-primary hover:cursor-pointer"
       >
         <div className="absolute z-10 left-6 sm:left-10 top-0 text-lg sm:text-3xl font-extrabold">
           Bytes
         </div>
-        <ChevronRight className="peer-checked:group-[]:rotate-180 transition-transform duration-500 w-4 h-4 sm:w-6 sm:h-6" />
-      </label>
+        <ChevronRight className="transition-transform duration-500 w-4 h-4 sm:w-6 sm:h-6" />
+      </button>
     </div>
   );
 }

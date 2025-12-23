@@ -37,11 +37,9 @@ const Navbar = (props) => {
           <Link href="/">Home</Link>
         </Button>
 
-        {!user ? null : (
-          <Button variant="link" asChild className="text-xs sm:text-sm">
-            <Link href="/courses">Courses</Link>
-          </Button>
-        )}
+        <Button variant="link" asChild className="text-xs sm:text-sm">
+          <Link href="/courses">Courses</Link>
+        </Button>
 
         {/* <Button variant="link" onClick={sendEmail}>
           Send

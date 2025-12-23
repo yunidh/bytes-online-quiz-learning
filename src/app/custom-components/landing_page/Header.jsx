@@ -51,20 +51,11 @@ const Header = () => {
           </p>
 
           <div className="flex justify-center lg:justify-start">
-            {!user ? (
-              <button
-                className="px-6 sm:px-10 py-3 sm:py-4 w-full sm:w-auto text-lg sm:text-2xl rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 hover:bg-slate-200 text-white transition-all duration-300 hover:scale-105"
-                onClick={handleSignIn}
-              >
-                Start Now
+            <Link href="/courses">
+              <button className="px-6 sm:px-10 py-3 sm:py-4 w-full sm:w-auto text-lg sm:text-2xl rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 hover:bg-slate-200 text-white transition-all duration-300 hover:scale-105">
+                {!user ? "Start Now" : "Continue"}
               </button>
-            ) : (
-              <Link href="/courses">
-                <button className="px-6 sm:px-10 py-3 sm:py-4 w-full sm:w-auto text-lg sm:text-2xl rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 hover:bg-slate-200 text-white transition-all duration-300 hover:scale-105">
-                  Continue
-                </button>
-              </Link>
-            )}
+            </Link>
           </div>
         </motion.div>
         <motion.div
